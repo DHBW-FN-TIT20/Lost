@@ -26,6 +26,9 @@ Run react server with:
 ```console
 npm start
 ```
+## Contributing
+Please read through our [contributing guidelines](.github/CONTRIBUTING.md).
+
 ---
 ## Task
 - Die Web-Applikation soll möglichst gemäß den Vorgaben einer PWA entsprechend (Progressive-Web-Application, mobile first, responsive, ..) umgesetzt werden.
