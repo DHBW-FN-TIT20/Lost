@@ -6,16 +6,16 @@ To get an overview of the project, read the [README](../README.md). Here are som
 - [Collaborating with pull requests](https://docs.github.com/en/github/collaborating-with-pull-requests)
 
 ## We Develop with Github
-We use github to host code, track issues and feature requests, as well as accept pull request
+We use github to host code, track issues and feature requests, as well as accept pull request.
 ## Report bugs using Github's issues
 We use Github issues to track public bugs. Report a bug by opening a new issue.
 **Great Bug Reports** tend to have:
-- A quick summary that describes the bug in it's core
+- A quick summary that describes the bug in it's core.
 - Steps to reproduce
     - Be specific!
     - Give sample code if you can.
-- What you expected to happen
-- What actually happens
+- Describe the output, which you expected the program to give.
+- Describe the actual output of the program.
 - Useful notes (possibly including why you think this might be happening, what you've already tried, etc.)
 ## Use a Consistent Coding Style
 - 2 spaces for indentation rather than tabs
@@ -29,5 +29,5 @@ Try to commit every feature on it's own.
     - **examples:**
         - not 'added x', choose 'add x'
         - not 'fixed bug y', write 'fix bug y'
-- Try to be short and precise in the heading of the commit
-- Use the extended text to give more information
+- Try to be short and precise in the heading of the commit.
+- Use the extended text to give more information.
