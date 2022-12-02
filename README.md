@@ -1,4 +1,11 @@
-# ![logo](public/Logo.png) Web-Eng-2_Gruppe4 
+
+<p align="center">
+  <img src="public/Logo.png" alt="Lost-Logo" width="150">
+</p>
+
+<h2 align="center">Lost</h2>
+
+## Web-Eng-2_Gruppe4 
 
 Web Engineering 2 Project from: 
 - [Christoph Koßlowski](https://github.com/Chri5K0)
