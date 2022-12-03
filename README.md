@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="public/Logo.png" alt="Lost-Logo" width="150">
+  <img src="docs/lost_logo-512x512.svg" alt="Lost-Logo" width="100">
 </p>
 
 <h2 align="center">Lost</h2>
