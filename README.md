@@ -1,4 +1,12 @@
-# Web-Eng-2_Gruppe4
+
+<p align="center">
+  <img src="docs/lost_logo-512x512.svg" alt="Lost-Logo" width="100">
+</p>
+
+<h2 align="center">Lost</h2>
+
+## Web-Eng-2_Gruppe4 
+
 Web Engineering 2 Project from: 
 - [Christoph Koßlowski](https://github.com/Chri5K0)
 - [Lea Silberzahn](https://github.com/lealabert)
