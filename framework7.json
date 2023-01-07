@@ -1,13 +1,12 @@
 {
-  "cwd": "/home/thibault/Projects/studium/webeng2/KnowWhereYouGo",
+  "cwd": "/workspace",
   "type": [
-    "pwa",
-    "web"
+    "pwa"
   ],
   "name": "Lost",
   "framework": "react",
   "template": "blank",
-  "cssPreProcessor": "scss",
+  "cssPreProcessor": "false",
   "bundler": "vite",
   "theming": {
     "customColor": true,
