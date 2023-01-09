@@ -76,12 +76,15 @@ class Home extends React.Component {
         <Link>Right Link</Link>
       </Toolbar>
       {/* Page content */}
+      {/* Map Container */}
+      {/*Wikipedia Info*/}
+      {/*Adresse und andere Info */}
       <Searchbar
             style={{ height: 70, margin: 0 }}
             value={this.state.searchText}
             placeholder="Search for a place, address, or coordinates (in Format latitude, longitude please)"
             onChange={event => {
-              this.setState({ searchText: event.target.value});
+              this.setState({ searchText: event.target.value, });
             }}
           />
       <Block strong>
@@ -92,5 +95,4 @@ class Home extends React.Component {
     )
   }
 }
-
 export default Home;
