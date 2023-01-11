@@ -22,7 +22,8 @@ class Home extends React.Component {
       curLoc: {
         lat: 0,
         lng: 0,
-        accuracy: 0
+        accuracy: 0,
+        favorites: []
       }
     }
   }
@@ -63,12 +64,16 @@ class Home extends React.Component {
   }
 
   /**
-   * This funcion stores the @param data with a @param key in the local storage
+   * This funcion stores the @param data with a @param key in the local storage.
+   * And it stores the key in the favorites state array.
    * @param {*} key - The key identifier for the data (should be unique)
    * @param {*} data - The actual data to be stored
    */
   store(key, data){
+    const favorite = this.state.favorites;
     localStorage.setItem(key, data);
+    favorite.push(key);
+    this.setState({favorites: favorite});
   }
 
   /**
@@ -78,6 +83,15 @@ class Home extends React.Component {
    */
   read(key){
     return localStorage.getItem(key);
+  }
+
+  /**
+   * This function returns the key from the position of the favorites array
+   * @param {*} pos - the position of the key in the favorites array
+   * @returns the key 
+   */
+  getKey(pos){
+    return this.state.favorites[pos];
   }
 
   /**
