@@ -62,6 +62,24 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
+  /**
+   * This funcion stores the @param data with a @param key in the local storage
+   * @param {*} key - The key identifier for the data (should be unique)
+   * @param {*} data - The actual data to be stored
+   */
+  store = function(key, data){
+    localStorage.setItem(key, data);
+  }
+
+  /**
+   * This function reads the data related with the @param key from the local storage and returns it
+   * @param {*} key 
+   * @returns the data for the key
+   */
+  read = function(key){
+    return localStorage.getItem(key);
+  }
+
   render() {
     return(
       <Page name="home">
