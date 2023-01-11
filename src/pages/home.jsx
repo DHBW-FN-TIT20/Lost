@@ -41,7 +41,7 @@ class Home extends React.Component {
    * @param {Float} lat - The latitude of the coordinate
    * @param {Float} lon - The longitude of the coordinate
    */
-  makeUrl = async (lat, lon) => {
+  makeUrl(lat, lon){
     let url = "https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + lon + "&format=json";
     return url;
   }
@@ -52,7 +52,7 @@ class Home extends React.Component {
    * @param {Float} lat - The latitude of the coordinate
    * @param {Float} lon - The longitude of the coordinate
    */
-  getJSON = function(callback, lat, lon) {
+  getJSON(callback, lat, lon) {
     let url = makeUrl(lat, lon);
   
     var xhr = new XMLHttpRequest();
@@ -70,14 +70,14 @@ class Home extends React.Component {
   };
 
   /**
-   * This function calls the {@link getJSON} Method .It returns the @param location object, 
+   * This function calls the {@link getJSON} Method. It returns the @param location object, 
    * if the request was successfull. Else the @param err (error) will be returned.
    * @param {Float} lat - The latitude of the coordinate
    * @param {Float} lon - The longitude of the coordinate
    * 
    * @return {JSON} The location json object of the nearest location.
    */
-  getLocationInfo = function(lat, lon){
+  getLocationInfo(lat, lon){
     getJSON(
       function(err, location) {
         if (err !== null) {
