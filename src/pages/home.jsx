@@ -91,7 +91,7 @@ class Home extends React.Component {
   }
 
   /**
-   * This function generates a random key of chars + numbers that is six character long and returns it
+   * This function generates a random key of chars + numbers that is six characters long and returns it
    * @returns the random key
    */
   randChar(){
