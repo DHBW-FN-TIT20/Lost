@@ -80,6 +80,30 @@ class Home extends React.Component {
     return localStorage.getItem(key);
   }
 
+  /**
+   * This function generates a random number between @param min and @param max
+   * @param {*} min - The miminum value
+   * @param {*} max - The maximum value
+   * @returns the random number
+   */
+  rand(min, max){
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  /**
+   * This function generates a random key of chars + numbers that is six character long and returns it
+   * @returns the random key
+   */
+  randChar(){
+    const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+    const randchars = [];
+    for (let i = 0; i < 6; i++) {
+      randchars.push(chars[rand(0, chars.length)]);
+  }
+
+  return randchars.join('');
+  }
+
   render() {
     return(
       <Page name="home">
