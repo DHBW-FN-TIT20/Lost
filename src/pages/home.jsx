@@ -67,7 +67,7 @@ class Home extends React.Component {
    * @param {*} key - The key identifier for the data (should be unique)
    * @param {*} data - The actual data to be stored
    */
-  store = function(key, data){
+  store(key, data){
     localStorage.setItem(key, data);
   }
 
@@ -76,7 +76,7 @@ class Home extends React.Component {
    * @param {*} key 
    * @returns the data for the key
    */
-  read = function(key){
+  read(key){
     return localStorage.getItem(key);
   }
 
