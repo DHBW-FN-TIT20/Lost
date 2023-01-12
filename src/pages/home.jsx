@@ -64,7 +64,7 @@ class Home extends React.Component {
 
   /**
    * This funcion stores the history @param data with a @param key in the local storage.
-   * @param {*} data - The actual data to be stored
+   * @param {String} data - one new history data set
    */
   storeHistory(data){
     var actualData = JSON.parse(localStorage.getItem("history"));
@@ -88,7 +88,7 @@ class Home extends React.Component {
 
   /**
    * This funcion stores the @param data of the favorites with a @param key in the local storage.
-   * @param {*} data - The actual data to be stored
+   * @param {String} data - one new favorite data set
    */
   storeFavorite(data){
     var actualData = JSON.parse(localStorage.getItem("favorite"));
