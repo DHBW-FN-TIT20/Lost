@@ -12,7 +12,6 @@ import Map from '../components/map';
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    // this.map = React.createRef();
     this.state = {
       curLoc: {
         lat: 0,
@@ -60,7 +59,7 @@ class Home extends React.Component {
 
   render() {
     return(
-      <Page name="home" onPageInit={() => this.map.rerender()}>
+      <Page name="home" onPageInit={() => this.map.rerenderMap()}>
       {/* Page content */}
       <Map ref={instance => this.map = instance} />
     </Page>
