@@ -1,14 +1,8 @@
 import React from 'react';
 import {
-  Page,
-  Searchbar,
-  Navbar,
-  NavTitle,
-  NavTitleLarge,
-  Link,
-  Toolbar,
-  Block,
+  Page
 } from 'framework7-react';
+import Map from '../components/map';
 
 // import leaflet stuff
 // import nominatim stuff
@@ -18,6 +12,7 @@ import {
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    // this.map = React.createRef();
     this.state = {
       curLoc: {
         lat: 0,
@@ -62,35 +57,12 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
+
   render() {
     return(
-      <Page name="home">
-      {/* Top Navbar */}
-
-      <Navbar large>
-        <NavTitle>Lost</NavTitle>
-      </Navbar>
-      {/* Toolbar */}
-      <Toolbar bottom>
-        <Link>Left Link</Link>
-        <Link>Right Link</Link>
-      </Toolbar>
+      <Page name="home" onPageInit={() => this.map.rerender()}>
       {/* Page content */}
-      {/* Map Container */}
-      {/*Wikipedia Info*/}
-      {/*Adresse und andere Info */}
-      <Searchbar
-            style={{ height: 70, margin: 0 }}
-            value={this.state.searchText}
-            placeholder="Search for a place, address, or coordinates (in Format latitude, longitude please)"
-            onChange={event => {
-              this.setState({ searchText: event.target.value, });
-            }}
-          />
-      <Block strong>
-        <p>This is the base structure for the lost project. </p>
-      </Block>
-
+      <Map ref={instance => this.map = instance} />
     </Page>
     )
   }

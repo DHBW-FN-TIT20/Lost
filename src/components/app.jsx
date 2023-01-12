@@ -2,6 +2,9 @@ import React from 'react';
 
 import {
   App,
+  Link,
+  Page,
+  Toolbar,
   View,
   Views
 } from 'framework7-react';
@@ -28,10 +31,19 @@ class MyApp extends React.Component {
   render() {
     return (
       <App {...this.f7params} >
-  
           {/* All of our Views */}
           <Views tabs className="safe-areas">
-            <View id="view-home" main tab tabActive url="/" />
+            <Toolbar tabbar labels bottom>
+              <Link tabLink="#view-maps" tabLinkActive iconIos='f7:maps' iconAurora='f7:maps' iconMd='f7:maps' text='Maps' />
+              <Link tabLink="#view-settings" iconIos='f7:gear' iconAurora='f7:gear' iconMd='f7:gear' text='Settings' />
+            </Toolbar>
+
+            <View id="view-maps" main tab tabActive url="/" />
+            <View id="view-settings" tab>
+              <Page>
+                Hello
+              </Page>
+            </View>
           </Views>
       </App>
     );
