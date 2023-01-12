@@ -23,7 +23,6 @@ class Home extends React.Component {
         lat: 0,
         lng: 0,
         accuracy: 0,
-        favorites: []
       }
     }
   }
@@ -64,59 +63,54 @@ class Home extends React.Component {
   }
 
   /**
-   * This funcion stores the @param data with a @param key in the local storage.
-   * And it stores the key in the favorites state array.
-   * @param {*} key - The key identifier for the data (should be unique)
+   * This funcion stores the history @param data with a @param key in the local storage.
    * @param {*} data - The actual data to be stored
    */
-  store(key, data){
-    const favorite = this.state.favorites;
-    localStorage.setItem(key, data);
-    favorite.push(key);
-    this.setState({favorites: favorite});
+  storeHistory(data){
+    var actualData = JSON.parse(localStorage.getItem("history"));
+    if(actualData){
+      actualData.push(data);
+      localStorage.setItem('history', JSON.stringify(actualData));
+      console.log(actualData + " added");
+    }else{
+      localStorage.setItem('history', JSON.stringify(data));
+      console.log(data + " added");
+    }
   }
 
   /**
-   * This function reads the data related with the @param key from the local storage and returns it
-   * @param {*} key 
-   * @returns the data for the key
+   * Returns the array of the history elements, which are stored in the local storage
+   * @returns the array of the history elements
    */
-  read(key){
-    return localStorage.getItem(key);
+  getHistory(){
+    return JSON.parse(localStorage.getItem("history"));
   }
 
   /**
-   * This function returns the key from the position of the favorites array
-   * @param {*} pos - the position of the key in the favorites array
-   * @returns the key 
+   * This funcion stores the @param data of the favorites with a @param key in the local storage.
+   * @param {*} data - The actual data to be stored
    */
-  getKey(pos){
-    return this.state.favorites[pos];
+  storeFavorite(data){
+    var actualData = JSON.parse(localStorage.getItem("favorite"));
+    if(actualData){
+      actualData.push(data);
+      localStorage.setItem('favorite', JSON.stringify(actualData));
+      console.log(actualData + " added");
+    }else{
+      localStorage.setItem('favorite', JSON.stringify(data));
+      console.log(data + " added");
+    }
   }
 
   /**
-   * This function generates a random number between @param min and @param max
-   * @param {*} min - The miminum value
-   * @param {*} max - The maximum value
-   * @returns the random number
+   * Returns the array of the favorite elements, which are stored in the local storage
+   * @returns the array of the favorite elements
    */
-  rand(min, max){
-    return Math.floor(Math.random() * (max - min) + min);
+  getFavorite(){
+    return JSON.parse(localStorage.getItem("favorite"));
   }
 
-  /**
-   * This function generates a random key of chars + numbers that is six characters long and returns it
-   * @returns the random key
-   */
-  randChar(){
-    const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
-    const randchars = [];
-    for (let i = 0; i < 6; i++) {
-      randchars.push(chars[rand(0, chars.length)]);
-  }
 
-  return randchars.join('');
-  }
 
   render() {
     return(
