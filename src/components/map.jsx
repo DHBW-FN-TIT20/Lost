@@ -1,21 +1,22 @@
 import React, { createRef } from "react";
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import LocationMarker from "./map-assets/LocationMarker";
 
 import '../css/map.scss';
-
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.map = createRef();
+    this.locationCoordinates = createRef();
   }
-
+  
   /**
    * wait till map ist ready an trigger resize
    * -> leaflet renders incorrectly when initializing in the background
    */
-  rerender() {
+  rerenderMap() {
     let wait = setInterval(() => {
       if(this.map.current) {
         this.map.current.invalidateSize();
@@ -31,6 +32,7 @@ class Map extends React.Component {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <LocationMarker setCoordinates={pos => this.locationCoordinates = pos} />
       </MapContainer>
     )
   }
