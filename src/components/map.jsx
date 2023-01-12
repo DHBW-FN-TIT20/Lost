@@ -2,6 +2,7 @@ import React, { createRef } from "react";
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import LocationMarker from "./map-assets/LocationMarker";
+import UserLocationMarker from "./map-assets/UserLocationMarker";
 
 import '../css/map.scss';
 
@@ -10,6 +11,7 @@ class Map extends React.Component {
     super(props);
     this.map = createRef();
     this.locationCoordinates = createRef();
+    this.userCoordinates = createRef();
   }
   
   /**
@@ -33,6 +35,7 @@ class Map extends React.Component {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <LocationMarker setCoordinates={pos => this.locationCoordinates = pos} />
+        <UserLocationMarker setCoordinates={pos => this.userCoordinates = pos} />
       </MapContainer>
     )
   }
