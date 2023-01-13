@@ -22,7 +22,7 @@ function LocationMarker(props) {
   });
 
   return position === null ? null : (
-    <Marker position={position ?? null} icon={icon} />
+    <Marker position={position} icon={icon} />
   )
 }
 

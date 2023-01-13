@@ -9,8 +9,8 @@ import { Circle, CircleMarker } from "react-leaflet";
 function UserLocationMarker(props) {
   return props.position.latlng === null ? null : (
     <>
-      <Circle center={props.position.latlng ?? null} radius={props.position.accuracy / 2} />
-      <CircleMarker center={props.position.latlng ?? null} fillOpacity={1} radius={10} />
+      <Circle center={props.position.latlng} radius={props.position.accuracy / 2} />
+      <CircleMarker center={props.position.latlng} fillOpacity={1} radius={10} />
     </>
   )
 }
