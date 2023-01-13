@@ -17,8 +17,8 @@ function LocationMarker(props) {
   });
   const icon = L.icon({
     iconUrl: 'dist/locationMarker-263x332.png',
-    iconAnchor:  [20, 50],
-    iconSize: [40, 50]
+    iconAnchor:  [15, 40],
+    iconSize: [30, 40]
   });
 
   return position === null ? null : (
