@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, f7 } from "framework7-react";
-import { CircleMarker, useMap, useMapEvents } from "react-leaflet";
+import { Circle, CircleMarker } from "react-leaflet";
 
 /**
  * Add's Location Marker on given position parameter
@@ -10,8 +9,8 @@ import { CircleMarker, useMap, useMapEvents } from "react-leaflet";
 function UserLocationMarker(props) {
   return props.position.latlng === null ? null : (
     <>
-      <CircleMarker center={props.position.latlng ?? null} radius={props.position.accuracy / 2} />
-      <CircleMarker center={props.position.latlng ?? null} fillOpacity={1} />
+      <Circle center={props.position.latlng ?? null} radius={props.position.accuracy / 2} />
+      <CircleMarker center={props.position.latlng ?? null} fillOpacity={1} radius={10} />
     </>
   )
 }
