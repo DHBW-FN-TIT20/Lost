@@ -24,6 +24,19 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+
+			&:active {
+				background-color: var(--f7-bars-bg-color);
+				&::after {
+					content: '';
+					position: absolute;
+					width: 40px;
+					height: 40px;
+					background-color: var(--f7-theme-color);
+					opacity: 0.25;
+					border-radius: inherit;
+				}
+			}
 		}
 	}
 
