@@ -15,9 +15,14 @@ function LocationMarker(props) {
       map.setView(e.latlng);
     }
   });
+  const icon = L.icon({
+    iconUrl: 'dist/locationMarker-263x332.png',
+    iconAnchor:  [20, 50],
+    iconSize: [40, 50]
+  });
 
   return position === null ? null : (
-    <Marker position={position ?? null} />
+    <Marker position={position ?? null} icon={icon} />
   )
 }
 
