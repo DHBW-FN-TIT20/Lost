@@ -1,4 +1,19 @@
 .map {
     height: 100%;
     width: 100%;
+
+    z-index: inherit;
+
+    .leaflet-bar {
+        border-color: transparent;
+        a {
+            background-color: var(--f7-bars-bg-color);
+            border-color: transparent;
+            color: var(--f7-tabbar-link-inactive-color);
+            
+        }
+        .active-state {
+            color: var(--f7-theme-color);
+        }
+    }
 }
