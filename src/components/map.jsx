@@ -23,8 +23,8 @@ class Map extends React.Component {
   }
 
   /**
-   * wait till map ist ready an trigger resize
-   * -> leaflet renders incorrectly when initializing in the background
+   * This function auto-detects changes to the map size and updates the map correspondingly.
+   * Leaflet renders incorrectly when initializing in the background, thus this function is needed.
    */
   rerenderMap() {
     let wait = setInterval(() => {
@@ -36,9 +36,10 @@ class Map extends React.Component {
   }
 
   /**
-   * start locating user position
-   * saves position data in state variable
-   * request's for location access on device -> cannot access, if connected via http
+   * This function is executed, when the PWA is started.
+   * It first requests the user's permission to access their location on their device.
+   * If permission is granted, the users current position is used and saved in a state variable.
+   * For requesting the current user locations 'https' is required.
    */
   startLocalization() {
     this.setState({ isLocating: true });
@@ -60,7 +61,7 @@ class Map extends React.Component {
   }
 
   /**
-   * stops locating user position
+   * This function stops the tracking of the current location of the user
    */
   stopLocalization() {
     this.map.current.stopLocate();

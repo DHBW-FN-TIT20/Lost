@@ -2,9 +2,10 @@ import React from "react";
 import { Circle, CircleMarker } from "react-leaflet";
 
 /**
- * Add's Location Marker on given position parameter
- * @param {*} props {latlng, accuracy} of position
- * @returns Location Marker for User Position with Accuracy Circle
+ * This function adds a LocationMarker based on the given user position.
+ * The LocationMarker contains the predicted user position with an accuracy circle, that specifies a radius in which the user should be located.
+ * @param {*} props {latlng, accuracy} of user position
+ * @returns {React.Fragment} rendered location marker with position of the user, plus accuracy circle
  */
 function UserLocationMarker(props) {
   return props.position.latlng === null ? null : (
