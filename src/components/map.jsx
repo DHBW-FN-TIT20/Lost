@@ -71,7 +71,7 @@ class Map extends React.Component {
   render() {
     return (
       <>
-        <MapContainer ref={this.map} className="map" center={[51.505, -0.09]} zoom={13}>
+        <MapContainer ref={this.map} className="map" center={[52.520008, 13.404954]} zoom={10}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
