@@ -1,19 +1,56 @@
 .map {
-    height: 100%;
-    width: 100%;
+	height: 100%;
+	width: 100%;
 
-    z-index: inherit;
+	z-index: inherit;
 
-    .leaflet-bar {
-        border-color: transparent;
-        a {
-            background-color: var(--f7-bars-bg-color);
-            border-color: transparent;
-            color: var(--f7-tabbar-link-inactive-color);
-            
-        }
-        .active-state {
-            color: var(--f7-theme-color);
-        }
-    }
+	.leaflet-bar {
+		border-color: transparent;
+
+		a {
+			background-color: var(--f7-bars-bg-color);
+			border-color: transparent;
+			color: var(--f7-tabbar-link-inactive-color);
+
+		}
+
+		.active-state {
+			color: var(--f7-theme-color);
+		}
+
+		&.leaflet-control-zoom a {
+			width: 40px;
+			height: 40px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+}
+
+.userPosBtn {
+	position: absolute;
+	bottom: var(--f7-tabbar-labels-height);
+
+	height: var(--f7-tabbar-labels-height);
+	width: var(--f7-tabbar-labels-height);
+
+	right: 0;
+	margin: 20px 10px;
+	z-index: 5;
+
+	background-color: var(--f7-bars-bg-color) !important;
+
+	.ripple-wave {
+		background-color: var(--f7-theme-color);
+		opacity: 0.25 !important;
+	}
+
+	color: var(--f7-tabbar-link-inactive-color);
+
+
+	&.locating {
+		color: var(--f7-theme-color) !important;
+	}
 }
