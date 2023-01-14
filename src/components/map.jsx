@@ -1,6 +1,6 @@
 import React, { createRef } from "react";
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import Leaflet from 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
@@ -86,26 +86,28 @@ class Map extends React.Component {
   }
 
   startNavigation() {
-    var routing = L.Routing.control({
-      waypoints: [
-        this.state.currentPos.latlng ?? null,
-        this.state.locationPos
-      ],
-      show: false,
-      collapsible: false,
-      createMarker: function() { return null; },
-      lineOptions: {
-        styles: [
-          {
-            //route line color
-            color: '#B317C1',
-          },
+    if (this.state.currentPos.latlng != null && this.state.locationPos != null) {
+      var routing = Leaflet.Routing.control({
+        waypoints: [
+          this.state.currentPos.latlng,
+          this.state.locationPos
         ],
-      }
-    }).addTo(this.map.current);
-    this.setState({
-      routing : routing 
-    });
+        show: false,
+        collapsible: false,
+        createMarker: function() { return null; },
+        lineOptions: {
+          styles: [
+            {
+              //route line color
+              color: '#B317C1',
+            },
+          ],
+        }
+      }).addTo(this.map.current);
+      this.setState({
+        routing : routing 
+      });
+    }
   }
 
   stopNavigation() {
