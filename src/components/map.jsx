@@ -18,7 +18,21 @@ class Map extends React.Component {
         latlng: null,
         accuracy: 0
       },
-      isLocating: false
+      locationPos: null,
+      isLocating: false,
+      routing: null,
+    };
+  }
+
+  componentDidUpdate() {
+    // This part updates the route
+    if (this.state.routing != null) {
+      this.state.routing.setWaypoints(
+        [
+          this.state.currentPos.latlng,
+          this.state.locationPos
+        ]
+      );
     }
   }
 
@@ -68,6 +82,33 @@ class Map extends React.Component {
     this.setState({ isLocating: false });
   }
 
+  startNavigation() {
+    var routing = L.Routing.control({
+      waypoints: [
+        this.state.currentPos.latlng ?? null,
+        this.state.locationPos
+      ],
+      show: false,
+      collapsible: false,
+      createMarker: function() { return null; },
+      lineOptions: {
+        styles: [
+          {
+            //route line color
+            color: '#B317C1',
+          },
+        ],
+      }
+    }).addTo(this.map.current);
+    this.setState({
+      routing : routing 
+    });
+  }
+
+  stopNavigation() {
+    this.state.routing.remove();
+    this.setState({routing: null});
+  }
 
   render() {
     return (
@@ -78,10 +119,13 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <LocationMarker setCoordinates={pos => this.locationCoordinates = pos} />
+          <LocationMarker setCoordinates={pos => this.setState({locationPos: pos})} />
           <UserLocationMarker position={this.state.currentPos} />
 
         </MapContainer>
+        <Button onClick={() => this.state.routing ? this.stopNavigation() :  this.startNavigation() } outline className='startNavBtn'>
+          { this.state.routing ? "Stop" : "Navigate" }
+        </Button>
         <Button onClick={() => this.state.isLocating ? this.stopLocalization() : this.startLocalization()} className={`userPosBtn ${this.state.isLocating ? 'locating' : null}`} fill
           iconIos={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconF7={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconMd={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} />
       </>
