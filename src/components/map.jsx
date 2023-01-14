@@ -25,6 +25,10 @@ class Map extends React.Component {
     };
   }
 
+  /**
+   * This function invokes after updating occurs.
+   * Checks if routing is active and updates start and destination waypoints if so.
+   */
   componentDidUpdate() {
     // This part updates the route
     if (this.state.routing != null) {
@@ -52,7 +56,7 @@ class Map extends React.Component {
 
   /**
    * This function is executed, when the user wants to be displayed on the map.
-   * It first requests the user's permission to access their location on their device.
+   * It first requests the users permission to access their location on their device.
    * If permission is granted, the users current position is used and saved in a state variable.
    * For requesting the current user locations 'https' is required.
    */
@@ -84,8 +88,7 @@ class Map extends React.Component {
   }
 
   /**
-   * This function creates a route on the map.
-   * It uses the user's current position as the start and the selected position as the destination.
+   * This function calculates and displays the route with the closest distance to the chosen destination based on the current location of the user.
    */
   startNavigation() {
     if (this.state.currentPos.latlng != null && this.state.locationPos != null) {
@@ -113,6 +116,7 @@ class Map extends React.Component {
   }
 
   /**
+   * This function will be called when the user wants to stop the routing via a button press on the front-end.
    * Ends and removes the route from the map.
    */
   stopNavigation() {
