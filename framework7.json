@@ -6,7 +6,7 @@
   "name": "Lost",
   "framework": "react",
   "template": "blank",
-  "cssPreProcessor": "false",
+  "cssPreProcessor": "scss",
   "bundler": "vite",
   "theming": {
     "customColor": true,
