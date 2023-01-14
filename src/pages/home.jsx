@@ -4,6 +4,9 @@ import {
 } from 'framework7-react';
 import Map from '../components/map';
 
+import '../css/home.scss';
+import wikiSearch from '../js/wikiAPI';
+
 // import leaflet stuff
 // import nominatim stuff
 // import wikipedia stuff
@@ -17,6 +20,10 @@ class Home extends React.Component {
         lat: 0,
         lng: 0,
         accuracy: 0
+      },
+      content: {
+        title: null,
+        text: null
       }
     }
   }
@@ -56,12 +63,23 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
+  getWikiInfo = async() => {
+    this.setState({ content: { title: 'loading...' }});
+    wikiSearch(this.map.locationCoordinates.lat, this.map.locationCoordinates.lng, "München")
+      .then((content) => this.setState({ content : content}));
+  }
 
   render() {
     return(
       <Page name="home" onPageInit={() => this.map.rerenderMap()}>
       {/* Page content */}
       <Map ref={instance => this.map = instance} />
+      <div onClick={() => this.getWikiInfo()} className='info-block'>
+        <h3>{this.state.content.title}</h3>
+        <p>
+          {this.state.content.text}
+        </p>
+      </div>
     </Page>
     )
   }
