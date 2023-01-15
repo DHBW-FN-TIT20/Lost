@@ -1,5 +1,8 @@
 import React, { createRef } from "react";
 import 'leaflet/dist/leaflet.css';
+import Leaflet from 'leaflet';
+import 'leaflet-routing-machine';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 import LocationMarker from "./map-assets/LocationMarker";
 import UserLocationMarker from "./map-assets/UserLocationMarker";
@@ -11,14 +14,30 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.map = createRef();
-    this.locationCoordinates = createRef();
-    this.userPos = null;
     this.state = {
       currentPos: {
         latlng: null,
         accuracy: 0
       },
-      isLocating: false
+      locationPos: null,
+      isLocating: false,
+      routing: null,
+    };
+  }
+
+  /**
+   * This function invokes after updating occurs.
+   * Checks if routing is active and updates start and destination waypoints if so.
+   */
+  componentDidUpdate() {
+    // This part updates the route
+    if (this.state.routing != null) {
+      this.state.routing.setWaypoints(
+        [
+          this.state.currentPos.latlng,
+          this.state.locationPos
+        ]
+      );
     }
   }
 
@@ -36,8 +55,8 @@ class Map extends React.Component {
   }
 
   /**
-   * This function is executed, when the PWA is started.
-   * It first requests the user's permission to access their location on their device.
+   * This function is executed, when the user wants to be displayed on the map.
+   * It first requests the users permission to access their location on their device.
    * If permission is granted, the users current position is used and saved in a state variable.
    * For requesting the current user locations 'https' is required.
    */
@@ -68,6 +87,42 @@ class Map extends React.Component {
     this.setState({ isLocating: false });
   }
 
+  /**
+   * This function calculates and displays the route with the closest distance to the chosen destination based on the current location of the user.
+   */
+  startNavigation() {
+    if (this.state.currentPos.latlng != null && this.state.locationPos != null) {
+      var routing = Leaflet.Routing.control({
+        waypoints: [
+          this.state.currentPos.latlng,
+          this.state.locationPos
+        ],
+        show: false,
+        collapsible: false,
+        createMarker: function() { return null; },
+        lineOptions: {
+          styles: [
+            {
+              //route line color
+              color: '#B317C1',
+            },
+          ],
+        }
+      }).addTo(this.map.current);
+      this.setState({
+        routing : routing 
+      });
+    }
+  }
+
+  /**
+   * This function will be called when the user wants to stop the routing via a button press on the front-end.
+   * Ends and removes the route from the map.
+   */
+  stopNavigation() {
+    this.state.routing.remove();
+    this.setState({routing: null});
+  }
 
   render() {
     return (
@@ -78,10 +133,13 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <LocationMarker setCoordinates={pos => this.locationCoordinates = pos} />
+          <LocationMarker setCoordinates={pos => this.setState({locationPos: pos})} />
           <UserLocationMarker position={this.state.currentPos} />
 
         </MapContainer>
+        <Button onClick={() => this.state.routing ? this.stopNavigation() :  this.startNavigation() } outline className='startNavBtn'>
+          { this.state.routing ? "Stop" : "Navigate" }
+        </Button>
         <Button onClick={() => this.state.isLocating ? this.stopLocalization() : this.startLocalization()} className={`userPosBtn ${this.state.isLocating ? 'locating' : null}`} fill
           iconIos={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconF7={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconMd={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} />
       </>
