@@ -28,6 +28,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
     "react-leaflet": "^4.2.0",
     "skeleton-elements": "^4.0.1",
     "swiper": "^8.4.5"

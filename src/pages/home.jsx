@@ -3,6 +3,8 @@ import {
   Page
 } from 'framework7-react';
 import Map from '../components/map';
+import '../css/home.scss'
+import SheetModal from '../components/modal';
 
 // import leaflet stuff
 // import nominatim stuff
@@ -20,7 +22,7 @@ class Home extends React.Component {
       }
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     // get current Location
     // set interval to update current Location
   }
@@ -31,7 +33,7 @@ class Home extends React.Component {
    * @param {string | undefined} osmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database. 
    * (https://web.locationiq.com/glossary/osm-id)
    */
-  searchLocation = async(pSearch, osmID = undefined) => {
+  searchLocation = async (pSearch, osmID = undefined) => {
     // if the OSM ID is undefined, use text search
   }
 
@@ -58,11 +60,12 @@ class Home extends React.Component {
 
 
   render() {
-    return(
-      <Page name="home" onPageInit={() => this.map.rerenderMap()}>
-      {/* Page content */}
-      <Map ref={instance => this.map = instance} />
-    </Page>
+    return (
+      <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
+        {/* Page content */}
+        <Map ref={instance => this.map = instance} />
+        <SheetModal />
+      </Page>
     )
   }
 }

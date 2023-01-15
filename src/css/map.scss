@@ -48,7 +48,7 @@
 
 .userPosBtn {
   position: absolute;
-  bottom: var(--f7-tabbar-labels-height);
+  bottom: calc(var(--f7-tabbar-labels-height) + 20px);
 
   height: var(--f7-tabbar-labels-height);
   width: var(--f7-tabbar-labels-height);

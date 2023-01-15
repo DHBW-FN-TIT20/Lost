@@ -1,0 +1,46 @@
+.box {
+  width: calc(100% - 10px);
+  margin: 5px;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: 5000;
+  background-color: var(--f7-bars-bg-color);
+  border-radius: 1em;
+  transition: transform 0.4s;
+
+  &.react-draggable-dragging {
+    transition: transform 0s;
+  }
+
+  .slider {
+    content: '';
+    width: 50px;
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 5px;
+      top: 4px;
+      border-radius: 2.5px;
+      background-color: var(--f7-tabbar-link-inactive-color);
+      transition: background-color .3s;
+    }
+    &.active-state, &:hover {
+      &::before {
+        background-color: var(--f7-theme-color);
+      }
+    }
+  }
+  
+  .modal-content {
+    padding: 10px;
+  }
+}
