@@ -1,5 +1,7 @@
 //getLocationInfo(48.401081,9.987608).then((props) => {console.log(props)})
 
+import httpGet from "./httpGetAPI";
+
 /**
  * This function generates a URL with the given coordinate.
  * This URL will be used to call the nominatim API.
@@ -24,7 +26,7 @@ function makeUrl(lat, lon) {
  */
 function getJSON(callback, lat, lon) {
   let url = makeUrl(lat, lon);
-  runAPI(url).then((res) => {
+  httpGet(url).then((res) => {
     callback(res);
   }, 
   rejection => console.log("nominatim rejected the API-request with error: "+ rejection));
@@ -46,24 +48,6 @@ function getLocationInfo(lat, lon) {
       },
       lat,lon
     );
-  });
-}
-
-
-function runAPI(url) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-    xhr.responseType = "json";
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        resolve(this.response);
-      } else {
-        reject(xhr.status);
-      }
-    };
-    xhr.onerror = reject;
-    xhr.send();
   });
 }
 
