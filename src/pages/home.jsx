@@ -41,25 +41,10 @@ class Home extends React.Component {
     // if the OSM ID is undefined, use text search
   }
 
-  /**
-   * This function  calls the nominatim API with a text search and returns a place
-   * @param {*} pSearch - This is the text which is put into the search field
-   */
-  getLocByText = async pSearch => {
-  }
-
-  /**
-   * This function calls the nominatim API with a text search and returns a place
-   * @param {*} pCoordinates - These are the Coordiantes that have been put into the search field
-   */
-  getLocByCoords = async (pCoordinates) => {
-  }
-
-  /**
-   * This function calls the nominatim API with a text search and returns a place
-   * @param {*} pOsmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database. 
-   */
-  getLocByOsmID = async pOsmID => {
+  makeURL(search){
+    //https://nominatim.openstreetmap.org/search?q=erbach+alb-donau-kreis&format=json
+    search = "https://nominatim.openstreetmap.org/search?q="+ search + "&format=json";
+    return search
   }
 
   render() {
