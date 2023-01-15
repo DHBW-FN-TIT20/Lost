@@ -65,7 +65,7 @@ class Home extends React.Component {
 
   getWikiInfo = async() => {
     this.setState({ content: { title: 'loading...' }});
-    wikiSearch(this.map.locationCoordinates.lat, this.map.locationCoordinates.lng, "München")
+    wikiSearch(this.map.state.locationPos.lat, this.map.state.locationPos.lng, "München")
       .then((content) => this.setState({ content : content}));
   }
 
