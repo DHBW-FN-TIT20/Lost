@@ -44,7 +44,7 @@ function wikiSearch(lat, lon, city) {
  * @param {function} callback - The action which gets called as soon as the response is ready
  */
 function getGeoSearch(lat, lon, callback) {
-    runAPI("https://de.wikipedia.org/w/api.php?action=query&origin=*&list=geosearch&gsradius=50&gscoord=" + lat + "|" + lon + "&format=json&gslimit=1").then((res) => {callback(res)}
+    runAPI("https://de.wikipedia.org/w/api.php?action=query&origin=*&list=geosearch&gsradius=75&gscoord=" + lat + "|" + lon + "&format=json&gslimit=1").then((res) => {callback(res)}
         , rejection => console.log("Wikipedia rejected the API-Request with the error: " + rejection));
 }
 
