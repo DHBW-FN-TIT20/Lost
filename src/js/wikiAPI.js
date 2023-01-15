@@ -1,6 +1,6 @@
 // wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.log(r));
 
-export function wikiSearch(lat, lon, city) {
+function wikiSearch(lat, lon, city) {
     return new Promise((resolve, reject) => {
         let article = {
             title: "",
