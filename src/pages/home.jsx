@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Button,
   Page
 } from 'framework7-react';
 import Map from '../components/map';
@@ -19,8 +20,9 @@ class Home extends React.Component {
         lat: 0,
         lng: 0,
         accuracy: 0
-      }
-    }
+      },
+      isRouting: false
+    };
   }
   componentDidMount() {
     // get current Location
@@ -63,9 +65,15 @@ class Home extends React.Component {
     return (
       <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <Map ref={instance => this.map = instance} />
-        <SheetModal>
+        <Map ref={instance => this.map = instance} handleRouting={(state) => { this.setState({isRouting: state}); this.modal.lower(); }} />
+        <SheetModal ref={instance => this.modal = instance}>
           <h3>Title</h3>
+          <div className='button-select'>
+            <Button onClick={() => this.state.isRouting ? this.map.stopNavigation() : this.map.startNavigation()} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
+              { this.state.isRouting ? 'Stop' : 'Navigate'}
+            </Button>
+            <Button className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
+          </div>
         </SheetModal>
       </Page>
     )

@@ -1,3 +1,23 @@
 .home .page-content {
   overflow-y: hidden !important;
 }
+
+.sheetModal {
+  .button-select {
+    display: flex;
+    margin-bottom: 5px;
+    
+    .button:not(.button:last-of-type) {
+      margin-right: 10px;
+    }
+
+    .favBtn {
+      color: #B317C1;
+      border-color: #B317C1;
+    }
+
+    .startNavBtn {
+      flex: 1
+    }
+  }
+}

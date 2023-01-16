@@ -4,6 +4,12 @@
 
   z-index: inherit;
 
+  .leaflet-control-container .leaflet-bottom {
+    bottom: 20px;
+    left: 0;
+    right: unset;
+  }
+
   .leaflet-bar {
     border-color: transparent;
 
@@ -70,11 +76,4 @@
   &.locating {
     color: var(--f7-theme-color) !important;
   }
-}
-
-.startNavBtn {
-  position: absolute;
-  top: 0;
-  z-index: 5;
-  left: 50%;
 }

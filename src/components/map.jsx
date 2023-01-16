@@ -112,6 +112,7 @@ class Map extends React.Component {
       this.setState({
         routing : routing 
       });
+      this.props.handleRouting(true);
     }
   }
 
@@ -122,6 +123,7 @@ class Map extends React.Component {
   stopNavigation() {
     this.state.routing.remove();
     this.setState({routing: null});
+    this.props.handleRouting(false);
   }
 
   render() {
@@ -137,9 +139,6 @@ class Map extends React.Component {
           <UserLocationMarker position={this.state.currentPos} />
 
         </MapContainer>
-        <Button onClick={() => this.state.routing ? this.stopNavigation() :  this.startNavigation() } outline className='startNavBtn'>
-          { this.state.routing ? "Stop" : "Navigate" }
-        </Button>
         <Button onClick={() => this.state.isLocating ? this.stopLocalization() : this.startLocalization()} className={`userPosBtn ${this.state.isLocating ? 'locating' : null}`} fill
           iconIos={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconF7={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconMd={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} />
       </>
