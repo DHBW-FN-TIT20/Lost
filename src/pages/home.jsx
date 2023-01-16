@@ -62,56 +62,6 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
-  /**
-   * This funcion stores the history @param data with a @param key in the local storage.
-   * @param {String} data - one new history data set
-   */
-  storeHistory(data){
-    var actualData = JSON.parse(localStorage.getItem("history"));
-    if(actualData){
-      actualData.push(data);
-      localStorage.setItem('history', JSON.stringify(actualData));
-      console.log(actualData + " added");
-    }else{
-      localStorage.setItem('history', JSON.stringify(data));
-      console.log(data + " added");
-    }
-  }
-
-  /**
-   * Returns the array of the history elements, which are stored in the local storage
-   * @returns the array of the history elements
-   */
-  getHistory(){
-    return JSON.parse(localStorage.getItem("history"));
-  }
-
-  /**
-   * This funcion stores the @param data of the favorites with a @param key in the local storage.
-   * @param {String} data - one new favorite data set
-   */
-  storeFavorite(data){
-    var actualData = JSON.parse(localStorage.getItem("favorite"));
-    if(actualData){
-      actualData.push(data);
-      localStorage.setItem('favorite', JSON.stringify(actualData));
-      console.log(actualData + " added");
-    }else{
-      localStorage.setItem('favorite', JSON.stringify(data));
-      console.log(data + " added");
-    }
-  }
-
-  /**
-   * Returns the array of the favorite elements, which are stored in the local storage
-   * @returns the array of the favorite elements
-   */
-  getFavorite(){
-    return JSON.parse(localStorage.getItem("favorite"));
-  }
-
-
-
   render() {
     return(
       <Page name="home">
