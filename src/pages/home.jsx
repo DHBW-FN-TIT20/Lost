@@ -64,7 +64,9 @@ class Home extends React.Component {
       <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
         <Map ref={instance => this.map = instance} />
-        <SheetModal />
+        <SheetModal>
+          <h3>Title</h3>
+        </SheetModal>
       </Page>
     )
   }

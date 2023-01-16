@@ -10,7 +10,7 @@ class SheetModal extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.positioning);
+    window.addEventListener('resize', () => this.positioning());
   }
 
   positioning() {
