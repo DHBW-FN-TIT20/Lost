@@ -1,4 +1,5 @@
 //getLocationInfo(48.401081,9.987608).then((props) => {console.log(props)})
+//getSearchLocation("Ulm alb-donau-kreis").then((props) => {console.log(props)})
 
 import httpGet from "./httpGetAPI";
 
@@ -8,7 +9,7 @@ import httpGet from "./httpGetAPI";
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  */
-function makeUrl(lat, lon) {
+function makeLocationUrl(lat, lon) {
   let url =
     "https://nominatim.openstreetmap.org/reverse?lat=" +
     lat +
@@ -19,36 +20,78 @@ function makeUrl(lat, lon) {
 }
 
 /**
- * This function calls the {@link makeUrl} Method to generate a URL and sends a HTTP GET request.
+ * This function calls the {@link makeLocationUrl} method to generate a URL and calls the {@link httpGet} method for a HTTP GET request.
  * @param {*} callback - The callback of the HTTP GET request
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  */
-function getJSON(callback, lat, lon) {
-  let url = makeUrl(lat, lon);
-  httpGet(url).then((res) => {
-    callback(res);
-  }, 
-  rejection => console.log("nominatim rejected the API-request with error: "+ rejection));
+function getLocationJSON(callback, lat, lon) {
+  let url = makeLocationUrl(lat, lon);
+  httpGet(url).then(
+    (res) => {
+      callback(res);
+    },
+    (rejection) =>
+      console.log("nominatim rejected the API-request with error: " + rejection)
+  );
 }
 
 /**
- * This function calls the {@link getJSON} Method. It returns the @param location object,
- * if the request was successfull. Else the @param err (error) will be returned.
+ * This function generates the url for the search API call
+ * @param {String} search
+ * @returns the url
+ */
+function makeSearchUrl(search) {
+  search =
+    "https://nominatim.openstreetmap.org/search?q=" + search + "&format=json";
+  return search;
+}
+
+/**
+ * This function calls the {@link makeSearchUrl} method to generate a URL and calls the {@link httpGet} method for a HTTP GET request.
+ * @param {*} callback - The callback of the HTTP GET request
+ * @param {String} search - The search arguments
+ */
+function getSearchJSON(callback, search) {
+  let url = makeSearchUrl(search);
+  httpGet(url).then(
+    (res) => {
+      callback(res);
+    },
+    (rejection) =>
+      console.log("nominatim rejected the API-request with error: " + rejection)
+  );
+}
+
+/**
+ * This function calls the {@link getLocationJSON} method. 
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  *
- * @return {JSON} The location json object of the nearest location.
+ * @returns A promise of the API call response
  */
 function getLocationInfo(lat, lon) {
   return new Promise((resolve, reject) => {
-    getJSON(
+    getLocationJSON(
       function (location) {
         resolve(location);
       },
-      lat,lon
+      lat, lon
     );
   });
 }
 
-export default getLocationInfo;
+/**
+ * This function calls the {@link getSearchJSON} method and returns a promise of the API call response.
+ * @param {String} search 
+ * @returns a promise of the API call response
+ */
+function getSearchLocation(search) {
+  return new Promise((resolve, reject) => {
+    getSearchJSON(function (location) {
+      resolve(location);
+    }, search);
+  });
+}
+
+export {getLocationInfo, getSearchLocation};
