@@ -5,7 +5,7 @@ import {
 import Map from '../components/map';
 
 import '../css/home.scss';
-import wikiSearch from '../js/wikiAPI';
+import wikiSearch from '../js/API/wikiAPI';
 
 // import leaflet stuff
 // import nominatim stuff

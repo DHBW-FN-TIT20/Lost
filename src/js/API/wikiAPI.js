@@ -1,4 +1,6 @@
-// wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.log(r));
+import httpGet from "./httpGetAPI";
+
+wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.log(r));
 
 /**
  * This function gets a representative wikipedia article to the given position.
@@ -44,7 +46,7 @@ function wikiSearch(lat, lon, city) {
  * @param {function} callback - The action which gets called as soon as the response is ready
  */
 function getGeoSearch(lat, lon, callback) {
-  runAPI("https://de.wikipedia.org/w/api.php?action=query&origin=*&list=geosearch&gsradius=75&gscoord=" + lat + "|" + lon + "&format=json&gslimit=1").then((res) => { callback(res) }
+  httpGet("https://de.wikipedia.org/w/api.php?action=query&origin=*&list=geosearch&gsradius=75&gscoord=" + lat + "|" + lon + "&format=json&gslimit=1").then((res) => { callback(res) }
     , rejection => console.log("Wikipedia rejected the API-Request with the error: " + rejection));
 }
 
@@ -56,7 +58,7 @@ function getGeoSearch(lat, lon, callback) {
  * @param {function} callback - The action which gets called as soon as the response is ready
  */
 function getWikiText(datag, callback) {
-  runAPI("https://de.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exsentences=5&titles=" + datag + "&explaintext=true&exsectionformat=plain&format=json").then((res) => { callback(res) }
+  httpGet("https://de.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exsentences=5&titles=" + datag + "&explaintext=true&exsectionformat=plain&format=json").then((res) => { callback(res) }
     , rejection => console.log("Wikipedia rejected the API-Request with the error: " + rejection));
 }
 
@@ -68,31 +70,8 @@ function getWikiText(datag, callback) {
  * @param {function} callback - The action which gets called as soon as the reponse is ready
  */
 function getCity(cityg, callback) {
-  runAPI("https://de.wikipedia.org/w/api.php?action=query&origin=*&format=json&generator=search&gsrlimit=1&gsrsearch='" + cityg + "'").then((res) => { callback(res) }
+  httpGet("https://de.wikipedia.org/w/api.php?action=query&origin=*&format=json&generator=search&gsrlimit=1&gsrsearch='" + cityg + "'").then((res) => { callback(res) }
     , rejection => console.log("Wikipedia rejected the API-Request with the error: " + rejection));
-}
-
-/**
- * This function performs a get request on the specified url.
- * It solves the promise with the correct response. It rejects on a failed request.
- * @param {string} url - The url for the API request
- * @returns - A promise which contains the executed API request
- */
-function runAPI(url) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        resolve(this.response);
-      } else {
-        reject(xhr.status);
-      }
-    };
-    xhr.onerror = reject;
-    xhr.send();
-  });
 }
 
 export default wikiSearch;
