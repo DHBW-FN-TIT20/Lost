@@ -2,11 +2,11 @@
 
 /**
  * This function gets a representative wikipedia article to the given position.
- * First it trys to find more info to the given coordinates, if it doesn't find a representative article about those coordinates, 
+ * First it tries to find more info to the given coordinates, if it doesn't find a representative article about those coordinates, 
  * it searches for an article about the given city.
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
- * @param {string} city - The city name in which the {@link lat}/{@link lng} lays
+ * @param {string} city - The city name in which the {@link lat}/{@link lng} is located
  * @returns A Promise which contains the API request.
  */
 function wikiSearch(lat, lon, city) {
@@ -36,9 +36,9 @@ function wikiSearch(lat, lon, city) {
 }
 
 /**
- * This function starts a wikipedia API request to the specified coordinates.
+ * This function starts a wikipedia API request with the specified coordinates.
  * It builds the required url with the specified coordinates, calls the {@link runAPI} and executes the callback function if successful.
- * The callback function gets the introduction passed.
+ * The callback function gets passed the introduction.
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  * @param {function} callback - The action which gets called as soon as the response is ready
@@ -51,8 +51,8 @@ function getGeoSearch(lat, lon, callback) {
 /**
  * This function starts a wikipedia API request to search for an introduction to an article.
  * It builds the required url with the given title of the article, calls the {@link runAPI} and executes the callback function after a success.
- * The callback function gets the introduction passed.
- * @param {string} datag - The title off the article
+ * The callback function gets passed the introduction.
+ * @param {string} datag - The title of the article
  * @param {function} callback - The action which gets called as soon as the response is ready
  */
 function getWikiText(datag, callback) {
@@ -63,7 +63,7 @@ function getWikiText(datag, callback) {
 /**
  * This function creates a wikipedia API request to search for articles about the specified city.
  * The function builds the required url with the given city, calls the {@link runAPI} and executes the callback function if successful.
- * The callback function gets the available articles passed.
+ * The callback function gets passed the available articles.
  * @param {string} cityg - The name of a city
  * @param {function} callback - The action which gets called as soon as the reponse is ready
  */
@@ -73,7 +73,7 @@ function getCity(cityg, callback) {
 }
 
 /**
- * This function preforms a get request on the specified url.
+ * This function performs a get request on the specified url.
  * It solves the promise with the correct response. It rejects on a failed request.
  * @param {string} url - The url for the API request
  * @returns - A promise which contains the executed API request
