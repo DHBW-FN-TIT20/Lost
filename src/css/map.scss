@@ -40,6 +40,9 @@
       }
     }
   }
+  .leaflet-routing-container {
+    display: none;
+  }
 
 }
 
@@ -67,4 +70,11 @@
   &.locating {
     color: var(--f7-theme-color) !important;
   }
+}
+
+.startNavBtn {
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  left: 50%;
 }
