@@ -9,7 +9,8 @@ function storeHistory(data){
     localStorage.setItem('history', JSON.stringify(actualData));
     console.log(actualData + " added");
   }else{
-    localStorage.setItem('history', JSON.stringify(data));
+    var array = [data];
+    localStorage.setItem('history', JSON.stringify(array));
     console.log(data + " added");
   }
 }
@@ -33,7 +34,8 @@ function storeFavorite(data){
     localStorage.setItem('favorite', JSON.stringify(actualData));
     console.log(actualData + " added");
   }else{
-    localStorage.setItem('favorite', JSON.stringify(data));
+    var array = [data];
+    localStorage.setItem('favorite', JSON.stringify(array));
     console.log(data + " added");
   }
 }
@@ -61,4 +63,11 @@ function removeFavoriteItem(index){
   }
 }
 
-export {storeHistory, getHistory, storeFavorite, getFavorite, removeFavoriteItem}
+/**
+ * This function clears the whole localStorage
+ */
+function removeAllItems(){
+  localStorage.clear();
+}
+
+export {storeHistory, getHistory, storeFavorite, getFavorite, removeFavoriteItem, removeAllItems}

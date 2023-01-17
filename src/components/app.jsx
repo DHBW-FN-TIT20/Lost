@@ -39,11 +39,7 @@ class MyApp extends React.Component {
             </Toolbar>
 
             <View id="view-maps" main tab tabActive url="/" />
-            <View id="view-settings" tab>
-              <Page>
-                Hello
-              </Page>
-            </View>
+            <View id="view-settings" tab url="/settings" />
           </Views>
       </App>
     );
