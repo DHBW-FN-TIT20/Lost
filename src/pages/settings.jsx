@@ -1,36 +1,33 @@
-import React from 'react';
-import { storeHistory, removeAllItems, storeFavorite, removeFavoriteItem, getFavorite } from '../js/localStorage';
+import React from "react";
 import {
-    Page
-  } from 'framework7-react';
+  getHistory,
+} from "../js/localStorage";
+import { Page, BlockTitle, List, ListItem } from "framework7-react";
 
 class Settings extends React.Component {
-    constructor(props) {
-      super(props);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      history: [],
+    };
+  }
 
-    componentDidMount(){
-        //storeFavorite(data);
-        //var a = getFavorite();
-        //console.log(a)
-        storeFavorite("test2");
-        console.log(getFavorite());       
-    }
+  componentDidMount() {
+    this.setState({ history: getHistory() });
+    console.log(getHistory());
+  }
 
-    
-  
-
-    componentDidUpdate(){
-      
-    }
-
-    render() {
-        return(
-        <Page name="settings">
-            Settings content   
-
-        </Page>
-        )
-      }
+  render() {
+    return (
+      <Page name="settings">
+        <BlockTitle>History</BlockTitle>
+        <List simpleList>
+          {this.state.history.map((item) => (
+            <ListItem key={item} title={item} />
+          ))}
+        </List>
+      </Page>
+    );
+  }
 }
 export default Settings;
