@@ -16,7 +16,7 @@ class Home extends React.Component {
       curLoc: {
         lat: 0,
         lng: 0,
-        accuracy: 0
+        accuracy: 0,
       }
     }
   }
