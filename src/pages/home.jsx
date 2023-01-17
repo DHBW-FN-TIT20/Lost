@@ -56,7 +56,6 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
-
   render() {
     return(
       <Page name="home" onPageInit={() => this.map.rerenderMap()}>
