@@ -1,6 +1,6 @@
 
 import Home from '../pages/home.jsx';
-import Settings from '../pages/settings.jsx';
+import Favorite from '../pages/favorite.jsx';
 
 var routes = [
   {
@@ -8,8 +8,8 @@ var routes = [
     component: Home,
   },
   {
-    path: '/settings',
-    component: Settings,
+    path: '/favorite',
+    component: Favorite,
   }
 ];
 

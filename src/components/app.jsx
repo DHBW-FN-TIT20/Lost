@@ -35,11 +35,11 @@ class MyApp extends React.Component {
           <Views tabs className="safe-areas">
             <Toolbar tabbar labels bottom>
               <Link tabLink="#view-maps" tabLinkActive iconIos='f7:maps' iconAurora='f7:maps' iconMd='f7:maps' text='Maps' />
-              <Link tabLink="#view-settings" iconIos='f7:gear' iconAurora='f7:gear' iconMd='f7:gear' text='Settings' />
+              <Link tabLink="#view-favorite" iconIos='f7:gear' iconAurora='f7:gear' iconMd='f7:gear' text='Settings' />
             </Toolbar>
 
             <View id="view-maps" main tab tabActive url="/" />
-            <View id="view-settings" tab url="/settings" />
+            <View id="view-favorite" tab url="/favorite" />
           </Views>
       </App>
     );

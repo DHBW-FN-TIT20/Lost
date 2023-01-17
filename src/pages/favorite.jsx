@@ -13,7 +13,7 @@ import {
   getHistory,
 } from "../js/localStorage";
 
-class Settings extends React.Component {
+class Favorite extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,4 +45,4 @@ class Settings extends React.Component {
     );
   }
 }
-export default Settings;
+export default Favorite;
