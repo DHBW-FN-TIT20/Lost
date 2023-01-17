@@ -28,7 +28,7 @@ class Favorite extends React.Component {
 
   render() {
     return (
-      <Page name="settings" onPageTabShow={() => this.loadLocalStorage()}>
+      <Page name="favorite" onPageTabShow={() => this.loadLocalStorage()}>
         <BlockTitle>Favorites</BlockTitle>
         <List simpleList>
           {this.state.favorite.map((item) => (
