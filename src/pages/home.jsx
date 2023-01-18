@@ -1,6 +1,9 @@
 import React from 'react';
 import {
   Button,
+  Icon,
+  List,
+  ListItem,
   Page
 } from 'framework7-react';
 import Map from '../components/map';
@@ -12,6 +15,46 @@ import SheetModal from '../components/modal';
 // import wikipedia stuff
 // import Routenberechnungs stuff
 
+const getIcon = (type, modifier) => {
+  let iconType = '';
+  switch (modifier) {
+    case 'Continue':
+    case 'Straight':
+    case 'Head':
+      iconType = 'arrow_up'
+      break;
+    case 'EndOfRoad':
+      iconType = 'arrow_up_to_line'
+      break;
+    case 'SlightLeft':
+      iconType = 'arrow_up_left'
+      break;
+    case 'Left':
+      iconType = 'arrow_turn_up_left'
+      break;
+    case 'SlightRight':
+      iconType = 'arrow_up_right'
+      break;
+    case 'Right':
+      iconType = 'arrow_turn_up_right'
+      break;
+    default:
+      if (type = 'DestinationReached') {
+        iconType = 'flag'
+      }
+      break;
+  }
+  return (
+    <Icon f7={iconType} />
+  )
+}
+
+const formatTime = (seconds) => {
+  let date = new Date(null);
+  date.setSeconds(seconds);
+  return date.toISOString().slice(11, 19);
+}
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +64,8 @@ class Home extends React.Component {
         lng: 0,
         accuracy: 0
       },
-      isRouting: false
+      isRouting: false,
+      route: null
     };
   }
   componentDidMount() {
@@ -65,15 +109,53 @@ class Home extends React.Component {
     return (
       <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <Map ref={instance => this.map = instance} handleRouting={(state) => { this.setState({isRouting: state}); this.modal.lower(); }} />
+        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.lower(); }} />
         <SheetModal ref={instance => this.modal = instance}>
-          <h3>Title</h3>
+          {!this.state.route ?
+            <h3>Title</h3>
+            :
+            (
+              <div className='routing-top'>
+                <div className='routing-overview'>
+                  <span>Title</span>
+                  <div>
+                    <span>Total:</span>
+                    <span>
+                      {(this.state.route.summary.totalDistance > 1000) ? ((this.state.route.summary.totalDistance / 1000).toFixed(2) + "km") : ((this.state.route.summary.totalDistance).toFixed(2) + "m")}
+                    </span>
+                    <span>
+                      {formatTime(this.state.route.summary.totalTime)}
+                    </span>
+                  </div>
+                </div>
+                <List className='first-instruction'>
+                  <ListItem>
+                    {getIcon(this.state.route.instructions[0].type, this.state.route.instructions[0].modifier)}
+                    {/* <span>{this.state.instructions[0].type}</span> */}
+                    <span>{this.state.route.instructions[0].text}</span>
+                    <span>{this.state.route.instructions[0].distance}m</span>
+                  </ListItem>
+                </List>
+              </div>
+            )}
           <div className='button-select'>
             <Button onClick={() => this.state.isRouting ? this.map.stopNavigation() : this.map.startNavigation()} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
-              { this.state.isRouting ? 'Stop' : 'Navigate'}
+              {this.state.isRouting ? 'Stop' : 'Navigate'}
             </Button>
             <Button className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
           </div>
+          {!this.state.route ? null :
+            <List>
+              {this.state.route.instructions.slice(1).map((instruction, index) =>
+              (
+                <ListItem key={index} >
+                  {getIcon(instruction.type, instruction.modifier)}
+                  <span>{instruction.text}</span>
+                  <span>{instruction.distance}m</span>
+                </ListItem>
+              ))}
+            </List>
+          }
         </SheetModal>
       </Page>
     )

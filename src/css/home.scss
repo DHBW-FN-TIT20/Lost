@@ -3,10 +3,41 @@
 }
 
 .sheetModal {
+
+  .routing-top {
+    .first-instruction {
+      margin: 10px 0;
+    }
+
+    .routing-overview {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+
+      span:first-of-type {
+        font-weight: bold;
+      }
+
+      div span {
+        &:first-of-type {
+          font-style: italic;
+        }
+
+        padding: 0 4px;
+      }
+    }
+  }
+
+  .item-inner {
+    span:first-of-type {
+      padding: 0 10px;
+    }
+  }
+
   .button-select {
     display: flex;
     margin-bottom: 5px;
-    
+
     .button:not(.button:last-of-type) {
       margin-right: 10px;
     }

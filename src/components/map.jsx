@@ -23,6 +23,11 @@ class Map extends React.Component {
       isLocating: false,
       routing: null,
     };
+    this.lastPositions = {
+      lasCurrentPos: null,
+      lastLocationPos: null
+    }
+    this.updateMap = false;
   }
 
   /**
@@ -32,12 +37,16 @@ class Map extends React.Component {
   componentDidUpdate() {
     // This part updates the route
     if (this.state.routing != null) {
-      this.state.routing.setWaypoints(
-        [
-          this.state.currentPos.latlng,
-          this.state.locationPos
-        ]
-      );
+      if (this.lastPositions.lasCurrentPos != this.state.currentPos ||
+        this.lastPositions.lastLocationPos != this.state.locationPos) {
+        this.lastPositions.lasCurrentPos = this.state.currentPos;
+        this.lastPositions.lastLocationPos = this.state.locationPos;
+        this.state.routing.setWaypoints(
+          [
+            this.state.currentPos.latlng,
+            this.state.locationPos
+          ]);
+      }
     }
   }
 
@@ -99,7 +108,7 @@ class Map extends React.Component {
         ],
         show: false,
         collapsible: false,
-        createMarker: function() { return null; },
+        createMarker: function () { return null; },
         lineOptions: {
           styles: [
             {
@@ -109,11 +118,26 @@ class Map extends React.Component {
           ],
         }
       }).addTo(this.map.current);
-      this.setState({
-        routing : routing 
-      });
+
+
+      routing.on('routesfound', (e) => {
+        this.updateMap = false;
+        console.log(e.routes[0]);
+        this.setState({
+          routing: routing,
+        });
+        this.props.handleInstructionsUpdate(e.routes[0]);
+      })
       this.props.handleRouting(true);
+
     }
+  }
+
+  updateRoute() {
+    // let wait = setInterval(() => {
+    //   // if (this.state.routing)
+    //   clearInterval(wait);
+    // }, 10);
   }
 
   /**
@@ -122,8 +146,9 @@ class Map extends React.Component {
    */
   stopNavigation() {
     this.state.routing.remove();
-    this.setState({routing: null});
+    this.setState({ routing: null });
     this.props.handleRouting(false);
+    this.props.handleInstructionsUpdate(null);
   }
 
   render() {
@@ -135,10 +160,11 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <LocationMarker setCoordinates={pos => this.setState({locationPos: pos})} />
+          <LocationMarker setCoordinates={pos => this.setState({ locationPos: pos })} />
           <UserLocationMarker position={this.state.currentPos} />
 
         </MapContainer>
+        <div>{this.state.distance} - {this.state.time}</div>
         <Button onClick={() => this.state.isLocating ? this.stopLocalization() : this.startLocalization()} className={`userPosBtn ${this.state.isLocating ? 'locating' : null}`} fill
           iconIos={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconF7={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconMd={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} />
       </>
