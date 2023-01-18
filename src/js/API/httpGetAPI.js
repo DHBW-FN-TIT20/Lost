@@ -1,9 +1,9 @@
 
 /**
- * This function performs a get request on the specified url.
+ * This function performs a get request with the specified URL.
  * It solves the promise with the correct response. It rejects on a failed request.
- * @param {string} url - The url for the API request
- * @returns - A promise which contains the executed API request
+ * @param {string} url - The URL which will be used for the API request
+ * @returns - A promise which contains the executed API request. A promise can be solved or rejected.
  */
 function httpGet(url) {
     return new Promise((resolve, reject) => {

@@ -3,9 +3,9 @@ import httpGet from "./httpGetAPI";
 wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.log(r));
 
 /**
- * This function gets a representative wikipedia article to the given position.
- * First it tries to find more info to the given coordinates, if it doesn't find a representative article about those coordinates, 
- * it searches for an article about the given city.
+ * This function returns the corresponding Wikipedia article to the given position.
+ * First it tries to find more info about the given coordinates, if it doesn't find a matching article for the given coordinates,
+ * it looks for an article about the given city.
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  * @param {string} city - The city name in which the {@link lat}/{@link lng} is located
@@ -38,12 +38,12 @@ function wikiSearch(lat, lon, city) {
 }
 
 /**
- * This function starts a wikipedia API request with the specified coordinates.
- * It builds the required url with the specified coordinates, calls the {@link runAPI} and executes the callback function if successful.
- * The callback function gets passed the introduction.
+ * This function starts a wikipedia API request, using the specified coordinates.
+ * It builds the required URL with the specified coordinates, calls the {@link runAPI} and executes the callback function, if successful.
+ * The callback function is given the introduction, returned by the Wikipedia API.
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
- * @param {function} callback - The action which gets called as soon as the response is ready
+ * @param {function} callback - The action which gets called as soon as the response is ready.
  */
 function getGeoSearch(lat, lon, callback) {
   httpGet("https://de.wikipedia.org/w/api.php?action=query&origin=*&list=geosearch&gsradius=75&gscoord=" + lat + "|" + lon + "&format=json&gslimit=1").then((res) => { callback(res) }
@@ -53,9 +53,9 @@ function getGeoSearch(lat, lon, callback) {
 /**
  * This function starts a wikipedia API request to search for an introduction to an article.
  * It builds the required url with the given title of the article, calls the {@link runAPI} and executes the callback function after a success.
- * The callback function gets passed the introduction.
+ * The callback function is given the introduction, returned by the Wikipedia API.
  * @param {string} datag - The title of the article
- * @param {function} callback - The action which gets called as soon as the response is ready
+ * @param {function} callback - The function which gets called as soon as the response is ready
  */
 function getWikiText(datag, callback) {
   httpGet("https://de.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exsentences=5&titles=" + datag + "&explaintext=true&exsectionformat=plain&format=json").then((res) => { callback(res) }
@@ -65,9 +65,9 @@ function getWikiText(datag, callback) {
 /**
  * This function creates a wikipedia API request to search for articles about the specified city.
  * The function builds the required url with the given city, calls the {@link runAPI} and executes the callback function if successful.
- * The callback function gets passed the available articles.
- * @param {string} cityg - The name of a city
- * @param {function} callback - The action which gets called as soon as the reponse is ready
+ * The callback function is given the available articles.
+ * @param {string} cityg - The name of the city
+ * @param {function} callback - The action which gets called as soon as the response is ready.
  */
 function getCity(cityg, callback) {
   httpGet("https://de.wikipedia.org/w/api.php?action=query&origin=*&format=json&generator=search&gsrlimit=1&gsrsearch='" + cityg + "'").then((res) => { callback(res) }
