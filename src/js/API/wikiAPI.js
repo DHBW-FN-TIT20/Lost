@@ -6,13 +6,14 @@ wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.
  * This function returns the corresponding Wikipedia article to the given position.
  * First it tries to find more info about the given coordinates, if it doesn't find a matching article for the given coordinates,
  * it looks for an article about the given city.
+ * The promise is solved when both the title and the text of an article are available.
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  * @param {string} city - The city name in which the {@link lat}/{@link lng} is located
- * @returns A Promise which contains the API request.
+ * @returns A Promise which contains the API request. The promise can only be resolved since possible errors have already been prevented at the API call level.
  */
 function wikiSearch(lat, lon, city) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let article = {
       title: "",
       text: ""
@@ -39,7 +40,7 @@ function wikiSearch(lat, lon, city) {
 
 /**
  * This function starts a wikipedia API request, using the specified coordinates.
- * It builds the required URL with the specified coordinates, calls the {@link runAPI} and executes the callback function, if successful.
+ * It builds the required URL with the specified coordinates, calls the {@link httpGet} and executes the callback function, if successful.
  * The callback function is given the introduction, returned by the Wikipedia API.
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
@@ -52,7 +53,7 @@ function getGeoSearch(lat, lon, callback) {
 
 /**
  * This function starts a wikipedia API request to search for an introduction to an article.
- * It builds the required url with the given title of the article, calls the {@link runAPI} and executes the callback function after a success.
+ * It builds the required url with the given title of the article, calls the {@link httpGet} and executes the callback function after a success.
  * The callback function is given the introduction, returned by the Wikipedia API.
  * @param {string} datag - The title of the article
  * @param {function} callback - The function which gets called as soon as the response is ready
@@ -64,7 +65,7 @@ function getWikiText(datag, callback) {
 
 /**
  * This function creates a wikipedia API request to search for articles about the specified city.
- * The function builds the required url with the given city, calls the {@link runAPI} and executes the callback function if successful.
+ * The function builds the required url with the given city, calls the {@link httpGet} and executes the callback function if successful.
  * The callback function is given the available articles.
  * @param {string} cityg - The name of the city
  * @param {function} callback - The action which gets called as soon as the response is ready.
