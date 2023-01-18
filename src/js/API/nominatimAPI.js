@@ -43,7 +43,7 @@ function getLocationJSON(callback, lat, lon) {
  */
 function makeSearchUrl(search) {
   search =
-    "https://nominatim.openstreetmap.org/search?q=" + search + "&format=json";
+    "https://nominatim.openstreetmap.org/search?q=" + search + "&format=json&limit=5";
   return search;
 }
 
