@@ -1,6 +1,6 @@
 import httpGet from "./httpGetAPI";
 
-wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.log(r));
+// wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.log(r));
 
 /**
  * This function returns the corresponding Wikipedia article to the given position.

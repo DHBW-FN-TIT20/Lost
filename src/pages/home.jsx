@@ -7,11 +7,14 @@ import {
   Page
 } from 'framework7-react';
 import Map from '../components/map';
-import '../css/home.scss'
 import SheetModal from '../components/modal';
 
-import '../css/home.scss';
+// helper functions
+import getLocationInfo from '../js/API/nominatimAPI';
 import wikiSearch from '../js/API/wikiAPI';
+
+// style sheets
+import '../css/home.scss'
 
 // import leaflet stuff
 // import nominatim stuff
@@ -69,9 +72,11 @@ class Home extends React.Component {
       },
       isRouting: false,
       route: null,
-      content: {
+      article: {
         title: null,
         text: null
+      },
+      address: {
       }
     }
   }
@@ -111,20 +116,28 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
-  getWikiInfo = async() => {
+  getWikiInfo = async(pos) => {
     this.setState({ content: { title: 'loading...' }});
-    wikiSearch(this.map.state.locationPos.lat, this.map.state.locationPos.lng, "München")
-      .then((content) => this.setState({ content : content}));
+    getLocationInfo(pos.lat, pos.lng)
+      .then((place) => {
+        console.log(place);
+        this.setState({ address: place.address })
+      })
+    wikiSearch(pos.lat, pos.lng, "München")
+      .then((content) => {
+        this.setState({ article : content});
+        this.modal.middle();
+      });
   }
 
   render() {
     return (
       <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.lower(); }} />
+        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} onPositionUpdate={(pos) => this.getWikiInfo(pos)} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.lower(); }} />
         <SheetModal ref={instance => this.modal = instance}>
           {!this.state.route ?
-            <h3>Title</h3>
+            <h3>{this.state.article.title}</h3>
             :
             (
               <div className='routing-top'>
@@ -156,7 +169,22 @@ class Home extends React.Component {
             </Button>
             <Button className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
           </div>
-          {!this.state.route ? null :
+          {!this.state.route ?
+            <>
+              <div>
+                {this.state.address ? 
+                  <>
+                    <span>{this.state.address.country}</span>
+                    <span>{this.state.address.postcode} {this.state.address.city}</span>
+                    <span>{this.state.address.house_number} {this.state.address.road}</span>
+                  </>
+                : null }
+              </div>
+              <div>
+                {this.state.article.text}
+              </div>
+            </>
+          :
             <List>
               {this.state.route.instructions.slice(1).map((instruction, index) =>
               (

@@ -129,7 +129,6 @@ class Map extends React.Component {
         this.props.handleInstructionsUpdate(e.routes[0]);
       })
       this.props.handleRouting(true);
-
     }
   }
 
@@ -153,7 +152,7 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <LocationMarker setCoordinates={pos => this.setState({ locationPos: pos })} />
+          <LocationMarker position={this.state.locationPos} handlePositionChange={pos => { this.setState({ locationPos: pos }); this.props.onPositionUpdate(pos); }} />
           <UserLocationMarker position={this.state.currentPos} />
 
         </MapContainer>
