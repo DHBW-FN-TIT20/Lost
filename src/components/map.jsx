@@ -133,13 +133,6 @@ class Map extends React.Component {
     }
   }
 
-  updateRoute() {
-    // let wait = setInterval(() => {
-    //   // if (this.state.routing)
-    //   clearInterval(wait);
-    // }, 10);
-  }
-
   /**
    * This function will be called when the user wants to stop the routing via a button press on the front-end.
    * Ends and removes the route from the map.
