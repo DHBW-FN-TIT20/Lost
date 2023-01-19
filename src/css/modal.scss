@@ -22,6 +22,7 @@
     top: -10px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 6;
     &::before {
       content: '';
       position: absolute;
@@ -43,5 +44,7 @@
   
   .modal-content {
     padding: 10px;
+    max-height: calc(100% - 56px - 56px);
+    overflow-y: auto;
   }
 }
