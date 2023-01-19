@@ -1,5 +1,9 @@
 import React from 'react';
 import {
+  Badge,
+  Block,
+  BlockHeader,
+  BlockTitle,
   Button,
   Icon,
   List,
@@ -76,8 +80,7 @@ class Home extends React.Component {
         title: null,
         text: null
       },
-      address: {
-      }
+      address: null
     }
   }
   componentDidMount() {
@@ -116,18 +119,27 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
-  getWikiInfo = async(pos) => {
-    this.setState({ content: { title: 'loading...' }});
+  getWikiInfo = async (pos) => {
+    this.setState({ content: { title: 'loading...' } });
     getLocationInfo(pos.lat, pos.lng)
       .then((place) => {
-        console.log(place);
-        this.setState({ address: place.address })
+        let location;
+        if (place.address.city) {
+          location = place.address.city
+        } else if (place.address.town) {
+          location = place.address.town
+        } else if (place.address.village) {
+          location = place.address.village
+        } else {
+          location = place.address.country
+        }
+        wikiSearch(pos.lat, pos.lng, location)
+          .then((content) => {
+            place.address.location = location;
+            this.setState({ address: place.address, article: content })
+            this.modal.middle();
+          });
       })
-    wikiSearch(pos.lat, pos.lng, "München")
-      .then((content) => {
-        this.setState({ article : content});
-        this.modal.middle();
-      });
   }
 
   render() {
@@ -137,7 +149,7 @@ class Home extends React.Component {
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} onPositionUpdate={(pos) => this.getWikiInfo(pos)} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.lower(); }} />
         <SheetModal ref={instance => this.modal = instance}>
           {!this.state.route ?
-            <h3>{this.state.article.title}</h3>
+            <h3 className='article-title'>{this.state.article.title}</h3>
             :
             (
               <div className='routing-top'>
@@ -171,20 +183,25 @@ class Home extends React.Component {
           </div>
           {!this.state.route ?
             <>
-              <div>
-                {this.state.address ? 
-                  <>
-                    <span>{this.state.address.country}</span>
-                    <span>{this.state.address.postcode} {this.state.address.city}</span>
-                    <span>{this.state.address.house_number} {this.state.address.road}</span>
-                  </>
-                : null }
-              </div>
-              <div>
-                {this.state.article.text}
-              </div>
+              {this.state.address ?
+                <Block>
+                  <h3>
+                    <Icon icon='f7:placemark' md='f7:placemark' aurora='f7:placemark' ios='f7:placemark' /> Adresse
+                  </h3>
+                  <hr />
+                  <p>
+                    <span>{this.state.address.country}, {this.state.address.postcode} {this.state.address.location}, {this.state.address.house_number} {this.state.address.road}</span>
+                  </p>
+                  <h3>
+                    <Icon icon='f7:info_circle' md='f7:info_circle' aurora='f7:info_circle' ios='f7:info_circle' /> Info
+                  </h3>
+                  <hr />
+                  <p>
+                    {this.state.article.text}
+                  </p>
+                </Block> : null}
             </>
-          :
+            :
             <List>
               {this.state.route.instructions.slice(1).map((instruction, index) =>
               (

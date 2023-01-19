@@ -28,6 +28,14 @@
     }
   }
 
+  .article-title {
+    margin: 9px 16px;
+  }
+  .block h3 {
+    color: var(--f7-theme-color);
+    font-weight: normal;
+  }
+
   .item-inner {
     span:first-of-type {
       padding: 0 10px;
@@ -36,7 +44,7 @@
 
   .button-select {
     display: flex;
-    margin-bottom: 5px;
+    margin: 0 16px;
 
     .button:not(.button:last-of-type) {
       margin-right: 10px;

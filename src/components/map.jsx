@@ -100,6 +100,7 @@ class Map extends React.Component {
    * This function calculates and displays the route with the closest distance to the chosen destination based on the current location of the user.
    */
   startNavigation() {
+    console.log("start");
     if (this.state.currentPos.latlng != null && this.state.locationPos != null) {
       var routing = Leaflet.Routing.control({
         waypoints: [
@@ -122,7 +123,6 @@ class Map extends React.Component {
 
       routing.on('routesfound', (e) => {
         this.updateMap = false;
-        console.log(e.routes[0]);
         this.setState({
           routing: routing,
         });
