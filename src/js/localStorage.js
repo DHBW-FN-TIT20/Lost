@@ -88,4 +88,5 @@ export {
   getFavorite,
   removeFavoriteItem,
   removeAllItems,
+  removeLastHistoryItem
 };

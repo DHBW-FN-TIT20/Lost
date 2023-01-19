@@ -23,7 +23,15 @@ class Favorite extends React.Component {
   }
 
   loadLocalStorage() {
-    this.setState({ history: getHistory(), favorite: getFavorite() });
+    var hist = getHistory();
+    var fav = getFavorite();
+    if (!hist){
+      hist = ['Your history is empty!']
+    }
+    if (!fav){
+      fav = ['Your favorite list is empty!']
+    }
+    this.setState({ history: hist, favorite: fav });
   }
 
   render() {
