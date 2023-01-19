@@ -10,6 +10,9 @@ import Map from '../components/map';
 import '../css/home.scss'
 import SheetModal from '../components/modal';
 
+import '../css/home.scss';
+import wikiSearch from '../js/API/wikiAPI';
+
 // import leaflet stuff
 // import nominatim stuff
 // import wikipedia stuff
@@ -65,8 +68,12 @@ class Home extends React.Component {
         accuracy: 0
       },
       isRouting: false,
-      route: null
-    };
+      route: null,
+      content: {
+        title: null,
+        text: null
+      }
+    }
   }
   componentDidMount() {
     // get current Location
@@ -104,6 +111,11 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
+  getWikiInfo = async() => {
+    this.setState({ content: { title: 'loading...' }});
+    wikiSearch(this.map.state.locationPos.lat, this.map.state.locationPos.lng, "München")
+      .then((content) => this.setState({ content : content}));
+  }
 
   render() {
     return (
