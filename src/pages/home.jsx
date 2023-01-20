@@ -1,8 +1,7 @@
 import React from "react";
-import { List, ListItem, Page, Searchbar } from "framework7-react";
+import { Page } from "framework7-react";
 import Map from "../components/map";
-import { getLocationInfo, getSearchLocation } from "../js/API/nominatimAPI";
-import "../css/home.scss";
+import SearchbarMap from "../components/searchbar";
 
 // import leaflet stuff
 // import nominatim stuff
@@ -18,8 +17,6 @@ class Home extends React.Component {
         lng: 0,
         accuracy: 0,
       },
-      searchResults : [],
-      isSearchResults: false
     };
   }
   componentDidMount() {
@@ -55,41 +52,11 @@ class Home extends React.Component {
    */
   getLocByOsmID = async (pOsmID) => {};
 
-  updateInputValue(evt) {
-    if(!this.state.isSearchResults){
-      this.setState({
-        isSearchResults : true
-      })
-    }
-    const val = evt.target.value;
-    getSearchLocation(val).then((props) => {
-      console.log(props[0].display_name);
-      this.setState({
-        searchResults : props
-      });
-    });
-  }
-
   render() {
     return (
       <Page name="home" onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <Searchbar
-          disableButtonText="Cancel"
-          placeholder="Search"
-          clearButton={true}
-          onChange={(evt) => this.updateInputValue(evt)}
-          onClickClear={() => this.setState({
-            searchResults: [],
-            isSearchResults : false
-          })}
-        ></Searchbar>
-        {this.state.isSearchResults ?
-        <List className="searchResults">
-          {this.state.searchResults.map((item) => (<ListItem link onClick={() => console.log(item)}>{item.display_name}</ListItem>)) }
-        </List> :
-        null
-        }
+        <SearchbarMap></SearchbarMap>
         <Map ref={(instance) => (this.map = instance)} />
       </Page>
     );

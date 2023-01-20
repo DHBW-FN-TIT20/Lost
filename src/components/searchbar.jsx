@@ -1,0 +1,64 @@
+import React from "react";
+import { List, ListItem, Searchbar } from "framework7-react";
+import { getSearchLocation } from "../js/API/nominatimAPI";
+import "../css/searchbar.scss";
+
+class SearchbarMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchResults: [],
+      isSearchResults: false,
+    };
+  }
+
+  /**
+   * This function updates the search results 
+   * @param {*} evt - The search string
+   */
+  updateInputValue(evt) {
+    console.log(evt);
+    if (!this.state.isSearchResults) {
+      this.setState({
+        isSearchResults: true,
+      });
+    }
+    const val = evt.target.value;
+    getSearchLocation(val).then((props) => {
+      console.log(props[0].display_name);
+      this.setState({
+        searchResults: props,
+      });
+    });
+  }
+
+  render() {
+    return (
+      <>
+        <Searchbar
+          onChange={(evt) => (this.updateInputValue(evt))}
+          disableButtonText="Cancel"
+          placeholder="Search"
+          clearButton={true}
+          onClickClear={() =>
+            this.setState({
+              searchResults: [],
+              isSearchResults: false,
+            })
+          }
+        ></Searchbar>
+        {this.state.isSearchResults ? (
+          <List className="searchResults">
+            {this.state.searchResults.map((item) => (
+              <ListItem link onClick={() => console.log(item)}>
+                {item.display_name}
+              </ListItem>
+            ))}
+          </List>
+        ) : null}
+      </>
+    );
+  }
+}
+
+export default SearchbarMap;
