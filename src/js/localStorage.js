@@ -74,6 +74,15 @@ function removeLastHistoryItem(){
   }
 }
 
+function setLastPosition(data){
+  var array = [data];
+  localStorage.setItem("lastLocation", JSON.stringify(array));
+}
+
+function getLastPosition(){
+  return JSON.parse(localStorage.getItem("favorite"));
+}
+
 /**
  * This function clears the whole localStorage
  */
@@ -88,5 +97,7 @@ export {
   getFavorite,
   removeFavoriteItem,
   removeAllItems,
-  removeLastHistoryItem
+  removeLastHistoryItem,
+  setLastPosition,
+  getLastPosition
 };

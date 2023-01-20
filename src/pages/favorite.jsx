@@ -1,17 +1,8 @@
 import React from "react";
 
-import {
-  Page,
-  BlockTitle,
-  List,
-  ListItem,
-  Icon,
-} from 'framework7-react';
+import { Page, BlockTitle, List, ListItem, Icon } from "framework7-react";
 
-import {
-  getFavorite,
-  getHistory,
-} from "../js/localStorage";
+import { getFavorite, getHistory, setLastPosition } from "../js/localStorage";
 
 class Favorite extends React.Component {
   constructor(props) {
@@ -22,14 +13,24 @@ class Favorite extends React.Component {
     };
   }
 
+  //Example JSON object structure of a favorite/history item
+  favoriteItem = {
+    name: "Erbach",
+    lat: 48.00,
+    lon: 50.00
+  }
+
+  /**
+   * This function loads the history and favorite items and stores it in the local state
+   */
   loadLocalStorage() {
     var hist = getHistory();
     var fav = getFavorite();
-    if (!hist){
-      hist = ['Your history is empty!']
+    if (!hist) {
+      hist = ["Your history is empty!"];
     }
-    if (!fav){
-      fav = ['Your favorite list is empty!']
+    if (!fav) {
+      fav = ["Your favorite list is empty!"];
     }
     this.setState({ history: hist, favorite: fav });
   }
@@ -40,13 +41,13 @@ class Favorite extends React.Component {
         <BlockTitle>Favorites</BlockTitle>
         <List simpleList>
           {this.state.favorite.map((item) => (
-            <ListItem key={item} title={item} />
+            <ListItem title={item.name} onClick={() => (setLastPosition(item))}/>
           ))}
         </List>
         <BlockTitle>History</BlockTitle>
         <List simpleList>
           {this.state.history.map((item) => (
-            <ListItem key={item} title={item}><Icon icon="delete_left"></Icon></ListItem>
+            <ListItem title={item.name} onClick={() => (setLastPosition(item))}></ListItem>
           ))}
         </List>
       </Page>
