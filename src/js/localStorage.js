@@ -59,6 +59,7 @@ function removeFavoriteItem(index) {
   } else {
     console.log("nothing to delete");
   }
+  
 }
 
 /**
