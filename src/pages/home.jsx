@@ -5,6 +5,7 @@ import {
   BlockHeader,
   BlockTitle,
   Button,
+  f7,
   Icon,
   List,
   ListItem,
@@ -81,11 +82,20 @@ class Home extends React.Component {
         text: null
       },
       address: null
-    }
+    };
+    this.modal = React.createRef(null);
+    // workaround https://github.com/react-grid-layout/react-draggable/issues/550
+    this.navigateBtn = React.createRef(null);
+    this.favouriteBtn = React.createRef(null);
   }
+
   componentDidMount() {
     // get current Location
     // set interval to update current Location
+
+    // workaround https://github.com/react-grid-layout/react-draggable/issues/550
+    this.navigateBtn.current.el.addEventListener('touchstart', () => this.handleNavigationClick());
+    this.favouriteBtn.current.el.addEventListener('touchstart', () => this.handleFavouritesClick());
   }
 
   /**
@@ -119,6 +129,15 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
+  handleNavigationClick() {
+    f7.dialog.alert("eventes");
+    this.state.isRouting ? this.map.stopNavigation() : this.map.startNavigation();
+  }
+
+  handleFavouritesClick() {
+    f7.dialog.alert("event2");
+  }
+
   getWikiInfo = async (pos) => {
     this.setState({ content: { title: 'loading...' } });
     getLocationInfo(pos.lat, pos.lng)
@@ -137,7 +156,7 @@ class Home extends React.Component {
           .then((content) => {
             place.address.location = location;
             this.setState({ address: place.address, article: content })
-            this.modal.middle();
+            this.modal.current.middle();
           });
       })
   }
@@ -147,7 +166,7 @@ class Home extends React.Component {
       <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} onPositionUpdate={(pos) => this.getWikiInfo(pos)} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.lower(); }} />
-        <SheetModal ref={instance => this.modal = instance}>
+        <SheetModal ref={this.modal}>
           {!this.state.route ?
             <h3 className='article-title'>{this.state.article.title}</h3>
             :
@@ -168,18 +187,17 @@ class Home extends React.Component {
                 <List className='first-instruction'>
                   <ListItem>
                     {getIcon(this.state.route.instructions[0].type, this.state.route.instructions[0].modifier)}
-                    {/* <span>{this.state.instructions[0].type}</span> */}
                     <span>{this.state.route.instructions[0].text}</span>
                     <span>{this.state.route.instructions[0].distance}m</span>
                   </ListItem>
                 </List>
               </div>
             )}
-          <div className='button-select'>
-            <Button onClick={() => this.state.isRouting ? this.map.stopNavigation() : this.map.startNavigation()} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
+          <div ref={this.modal} className='button-select'>
+            <Button ref={this.navigateBtn} onClick={() => this.handleNavigationClick()} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
               {this.state.isRouting ? 'Stop' : 'Navigate'}
             </Button>
-            <Button className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
+            <Button ref={this.favouriteBtn} onClick={() => this.handleFavouritesClick()} className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
           </div>
           {!this.state.route ?
             <>
@@ -190,7 +208,7 @@ class Home extends React.Component {
                   </h3>
                   <hr />
                   <p>
-                    <span>{this.state.address.country}, {this.state.address.postcode} {this.state.address.location}, {this.state.address.house_number} {this.state.address.road}</span>
+                    {this.state.address.country}, {this.state.address.postcode} {this.state.address.location}, {this.state.address.house_number} {this.state.address.road}
                   </p>
                   <h3>
                     <Icon icon='f7:info_circle' md='f7:info_circle' aurora='f7:info_circle' ios='f7:info_circle' /> Info
