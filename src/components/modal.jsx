@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Draggable from 'react-draggable';
 
 import '../css/modal.scss';
@@ -6,7 +7,12 @@ import '../css/modal.scss';
 class SheetModal extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isDisabled: false
+    };
     this.draggable = React.createRef(null);
+    this.slider = React.createRef(null);
+    this.content = React.createRef(null);
     this.positions = {
       offset: 56,
       high: 0.1,
@@ -18,6 +24,11 @@ class SheetModal extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', () => this.positioning());
+    this.slider.current.addEventListener('mousedown', () => this.activate())
+    this.slider.current.addEventListener('touchstart', () => this.activate())
+
+    ReactDOM.findDOMNode(this.draggable.current).addEventListener('mouseup', () => this.toggleLock());
+    ReactDOM.findDOMNode(this.draggable.current).addEventListener('touchend', () => this.toggleLock());
   }
 
   high() {
@@ -36,9 +47,23 @@ class SheetModal extends React.Component {
     this.draggable.current.setState({ y: window.innerHeight - this.positions.close - this.positions.offset })
   }
 
+  disable() {
+    if (this.content.current.scrollHeight > this.content.current.clientHeight) {
+      this.setState({isDisabled : true});
+    }
+  }
+
+  activate() {
+    if (this.state.isDisabled) {
+      this.state.isDisabled = false;
+      this.setState({isDisabled : false});
+    }
+  }
+
   positioning() {
     if (this.draggable.current.state.y < window.innerHeight * 0.3) {
       this.high();
+      this.disable();
     }
     else if (this.draggable.current.state.y < window.innerHeight * 0.7) {
       this.middle();
@@ -51,12 +76,19 @@ class SheetModal extends React.Component {
     }
   }
 
+  toggleLock() {
+    if (this.content.current.scrollTop>0)
+    {
+      this.disable()
+    }
+  }
+
   render() {
     return (
-      <Draggable ref={this.draggable} defaultPosition={{ x: 0, y: window.innerHeight - this.positions.close - this.positions.offset }} axis='y' bounds={{ left: 0, top: window.innerHeight * this.positions.high - this.positions.offset, right: 0, bottom: 1200 }} onStop={() => this.positioning()} >
-        <div className="sheetModal">
-          <a className="slider" />
-          <div className="modal-content">
+      <Draggable disabled={this.state.isDisabled} onMouseDown={(event) => { console.log(event); if(this.content.current.scrollTop==0){ this.activate(); console.log("trigger"); ReactDOM.findDOMNode(this.draggable.current).dispatchEvent(new Event('mousedown'), event)} }} ref={this.draggable} defaultPosition={{ x: 0, y: window.innerHeight * this.positions.high - this.positions.offset }} axis='y' bounds={{ left: 0, top: window.innerHeight * this.positions.high - this.positions.offset, right: 0, bottom: 1200 }} onStop={() => this.positioning()} >
+        <div className='sheetModal'>
+          <a ref={this.slider} className="slider" />
+          <div ref={this.content} className="modal-content">
             {this.props.children}
           </div>
         </div>
