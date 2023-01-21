@@ -1,6 +1,12 @@
 import React from "react";
 import { Icon } from "framework7-react";
 
+/**
+ * This function returns an appropriate icon based on the given type/modifier.
+ * @param {string} type - The type of the direction
+ * @param {string} modifier - The current modifier of the direction
+ * @returns f7 Icon Component representing the given direction.
+ */
 const getDirectionIconFromModifier = (type, modifier) => {
   let iconType = '';
   switch (modifier) {

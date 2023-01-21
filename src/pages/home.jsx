@@ -28,11 +28,6 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      curLoc: {
-        lat: 0,
-        lng: 0,
-        accuracy: 0
-      },
       isRouting: false,
       route: null,
       article: {
@@ -47,6 +42,11 @@ class Home extends React.Component {
     this.favouriteBtn = React.createRef(null);
   }
 
+  /**
+   * This function invokes after the component did mount.
+   * It add's custom touch events to the buttons inside the sheet modal. The buttons won't recognize the normal onClick event on touch devices otherwise.
+   * This is a workaround for the current version of react-draggable.
+   */
   componentDidMount() {
     // get current Location
     // set interval to update current Location
@@ -87,13 +87,25 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
+  /**
+   * This function handels the action for clicking the navigation-start/-stop button
+   * It start/stops the navigation process depending on the current routing state.
+   */
   handleNavigationClick = async () => {
     this.state.isRouting ? this.map.stopNavigation() : this.map.startNavigation();
   }
 
+  /**
+   * This function handels the action for adding or removing the current location from the favourites list.
+   */
   handleFavouritesClick = async () => {
   }
 
+  /**
+   * This function get's info about the given position.
+   * The function updates the state variables for address information and the available article about that position.
+   * @param {LatLng} pos - 
+   */
   getWikiInfo = async (pos) => {
     this.setState({ content: { title: 'loading...' } });
     getLocationInfo(pos.lat, pos.lng)
@@ -123,6 +135,8 @@ class Home extends React.Component {
         {/* Page content */}
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
         <SheetModal ref={this.modal}>
+          {/* The content of the sheet modal shows in 3 diffrent states. Highest priority has the route information. If no routing is not active, information about the specified location is displayed. Otherwise it shows nothing. */}
+          {/* This upper part shows the active instruction of the routing or the heading of the article about the specified place above the buttons. */}
           {!this.state.route ?
             <h3 className='article-title'>{this.state.article.title}</h3>
             :
@@ -149,6 +163,7 @@ class Home extends React.Component {
                 </List>
               </div>
             )}
+          {/* The control buttons are always visble. They only change state when navigation is active or depending on whether the specified location is a favorite or not. */}
           <div ref={this.modal} className='button-select'>
             <Button ref={this.navigateBtn} onClick={this.handleNavigationClick} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
               {this.state.isRouting ? 'Stop' : 'Navigate'}
