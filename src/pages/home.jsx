@@ -109,7 +109,11 @@ class Home extends React.Component {
       console.log(this.state.isFavourite);
       if (this.state.isFavourite) {
         let favs = getFavorite();
-        let idx = favs.findIndex(m => m.address == this.state.address);
+        let idx = favs.findIndex(m => m.address.country == this.state.address.country
+          && m.address.postcode == this.state.address.postcode
+          && m.address.location == this.state.address.location
+          && m.address.road == this.state.address.road
+          && m.address.house_number == this.state.address.house_number);
         if (idx) {
           removeFavoriteItem(idx);
           this.setState({ isFavourite: false });
@@ -146,7 +150,7 @@ class Home extends React.Component {
             place.address.location = location;
             let favs = getFavorite();
             let isFav = favs.some(m => m.address.country == place.address.country
-              && m.address.postcode == m.address.postcode
+              && m.address.postcode == place.address.postcode
               && m.address.location == place.address.location
               && m.address.road == place.address.road
               && m.address.house_number == place.address.house_number);
@@ -158,6 +162,14 @@ class Home extends React.Component {
   }
 
   loadLastPosition = () => {
+    if (this.curLocation.lat && this.curLocation.lng) {
+      let isFav = getFavorite().some(m => m.address.country == this.state.address.country
+        && m.address.postcode == this.state.address.postcode
+        && m.address.location == this.state.address.location
+        && m.address.road == this.state.address.road
+        && m.address.house_number == this.state.address.house_number);
+      if (this.state.isFavourite != isFav) this.setState({ isFavourite : isFav });
+    }
     let position = getLastPosition();
     if(position) this.map.setPosition(position.pos);
   }
