@@ -1,11 +1,7 @@
 import React from 'react';
 import {
-  Badge,
   Block,
-  BlockHeader,
-  BlockTitle,
   Button,
-  f7,
   Icon,
   List,
   ListItem,
@@ -91,13 +87,11 @@ class Home extends React.Component {
   getLocByOsmID = async pOsmID => {
   }
 
-  handleNavigationClick() {
-    f7.dialog.alert("eventes");
+  handleNavigationClick = async () => {
     this.state.isRouting ? this.map.stopNavigation() : this.map.startNavigation();
   }
 
-  handleFavouritesClick() {
-    f7.dialog.alert("event2");
+  handleFavouritesClick = async () => {
   }
 
   getWikiInfo = async (pos) => {
@@ -156,10 +150,10 @@ class Home extends React.Component {
               </div>
             )}
           <div ref={this.modal} className='button-select'>
-            <Button ref={this.navigateBtn} onClick={() => this.handleNavigationClick()} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
+            <Button ref={this.navigateBtn} onClick={this.handleNavigationClick} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
               {this.state.isRouting ? 'Stop' : 'Navigate'}
             </Button>
-            <Button ref={this.favouriteBtn} onClick={() => this.handleFavouritesClick()} className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
+            <Button ref={this.favouriteBtn} onClick={this.handleFavouritesClick} className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
           </div>
           {!this.state.route ?
             <>

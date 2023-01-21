@@ -49,14 +49,14 @@ class SheetModal extends React.Component {
 
   disable() {
     if (this.content.current.scrollHeight > this.content.current.clientHeight) {
-      this.setState({isDisabled : true});
+      this.setState({ isDisabled: true });
     }
   }
 
   activate() {
     if (this.state.isDisabled) {
       this.state.isDisabled = false;
-      this.setState({isDisabled : false});
+      this.setState({ isDisabled: false });
     }
   }
 
@@ -77,15 +77,14 @@ class SheetModal extends React.Component {
   }
 
   toggleLock() {
-    if (this.content.current.scrollTop>0)
-    {
+    if (this.content.current.scrollTop > 0) {
       this.disable()
     }
   }
 
   render() {
     return (
-      <Draggable disabled={this.state.isDisabled} onMouseDown={(event) => { console.log(event); if(this.content.current.scrollTop==0){ this.activate(); console.log("trigger"); ReactDOM.findDOMNode(this.draggable.current).dispatchEvent(new Event('mousedown'), event)} }} ref={this.draggable} defaultPosition={{ x: 0, y: window.innerHeight - this.positions.close - this.positions.offset }} axis='y' bounds={{ left: 0, top: window.innerHeight * this.positions.high - this.positions.offset, right: 0, bottom: 1200 }} onStop={() => this.positioning()} >
+      <Draggable disabled={this.state.isDisabled} onMouseDown={() => this.content.current.scrollTop == 0 ? this.activate() : null} ref={this.draggable} defaultPosition={{ x: 0, y: window.innerHeight - this.positions.close - this.positions.offset }} axis='y' bounds={{ left: 0, top: window.innerHeight * this.positions.high - this.positions.offset, right: 0, bottom: 1200 }} onStop={() => this.positioning()} >
         <div className='sheetModal'>
           <a ref={this.slider} className="slider" />
           <div ref={this.content} className="modal-content">
