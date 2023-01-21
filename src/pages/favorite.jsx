@@ -9,6 +9,8 @@ import {
   setLastPosition,
 } from "../js/localStorage";
 
+import '../css/favourite.scss';
+
 class Favorite extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,7 @@ class Favorite extends React.Component {
    * This function delets Favorite with given index
    * @param {Integer} index - Index of the item that will be removed
    */
-  removeItemOnIndex(index){
+  removeItemOnIndex(index) {
     removeFavoriteItem(index);
     this.loadLocalStorage();
   }
@@ -42,10 +44,10 @@ class Favorite extends React.Component {
     var hist = getHistory();
     var fav = getFavorite();
     if (!hist) {
-      hist = ["Your history is empty!"];
+      hist = [];
     }
     if (!fav) {
-      fav = ["Your favorite list is empty!"];
+      fav = [];
     }
     this.setState({ history: hist, favorite: fav });
   }
@@ -54,29 +56,32 @@ class Favorite extends React.Component {
     return (
       <Page name="favorite" onPageTabShow={() => this.loadLocalStorage()}>
         <BlockTitle>Favorites</BlockTitle>
-        <List simpleList>
-          {this.state.favorite.map((item, index) => (
+        <List simpleList className="favourites-list">
+          {this.state.favorite.map((item, idx) => (
             <ListItem
-              key={item.lat + item.lon}
-              title={item.adress}
-              onClick={() => setLastPosition(item)}
+              mediaItem
+              key={idx}
             >
-              <Button fill onClick={() => this.removeItemOnIndex(index)}>
-                Delete
-              </Button>
+              <div>
+                <span>{item.address.location}</span>
+                <span>{item.address.road} {item.address.house_number}</span>              
+              </div>
+              <Button iconSize={20} icon="f7:placemark" iconMd="f7:placemark" iconIos="f7:placemark" iconAurora="f7:placemark" fill onClick={() => setLastPosition(item)} />
+              <Button iconSize={20} icon="f7:trash" iconMd="f7:trash" iconIos="f7:trash" iconAurora="f7:trash" fill onClick={() => this.removeItemOnIndex(idx)} />
             </ListItem>
           ))}
         </List>
         <BlockTitle>History</BlockTitle>
-        <List simpleList>
-          {this.state.history.map((item) => (
-            <ListItem
-              key={item.lat + item.lon}
-              title={item.adress}
-              onClick={() => setLastPosition(item)}
-            ></ListItem>
-          ))}
-        </List>
+        {this.state.history.length > 0 ?
+          <List simpleList>
+            {this.state.history.map((item, idx) => (
+              <ListItem
+                key={idx}
+                title={item.address.location}
+                onClick={() => setLastPosition(item)}
+              ></ListItem>
+            ))}
+          </List> : null}
       </Page>
     );
   }
