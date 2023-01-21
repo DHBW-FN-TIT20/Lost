@@ -89,7 +89,7 @@ function getLocationInfo(lat, lon) {
 function getSearchLocation(search) {
   return new Promise((resolve, reject) => {
     getSearchJSON(function (location) {
-      resolve(location);
+      resolve({ location, search });
     }, search);
   });
 }

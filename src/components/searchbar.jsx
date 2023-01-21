@@ -17,18 +17,17 @@ class SearchbarMap extends React.Component {
    * @param {*} evt - The search string
    */
   updateInputValue(evt) {
-    console.log(evt);
     if (!this.state.isSearchResults) {
       this.setState({
         isSearchResults: true,
       });
     }
-    const val = evt.target.value;
-    getSearchLocation(val).then((props) => {
-      console.log(props[0].display_name);
-      this.setState({
-        searchResults: props,
-      });
+    getSearchLocation(evt.target.value).then((props) => {
+      if (props.search == evt.target.value) {
+        this.setState({
+          searchResults: props.location,
+        });
+      }
     });
   }
 
@@ -49,8 +48,8 @@ class SearchbarMap extends React.Component {
         ></Searchbar>
         {this.state.isSearchResults ? (
           <List className="searchResults">
-            {this.state.searchResults.map((item) => (
-              <ListItem link onClick={() => console.log(item)}>
+            {this.state.searchResults.map((item, idx) => (
+              <ListItem key={idx} link onClick={() => console.log(item)}>
                 {item.display_name}
               </ListItem>
             ))}
