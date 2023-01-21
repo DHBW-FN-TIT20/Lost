@@ -5,7 +5,7 @@
 function storeHistory(data) {
   var actualData = JSON.parse(localStorage.getItem("history"));
   if (actualData) {
-    removeLastHistoryItem();
+    if(actualData.length > 20) actualData.splice(0,1);
     actualData.push(data);
     localStorage.setItem("history", JSON.stringify(actualData));
   } else {
@@ -63,19 +63,6 @@ function removeFavoriteItem(index) {
 }
 
 /**
- * This function removes the first (oldest) item of the history list, if the history list is greater than 20.   
- */
-function removeLastHistoryItem(){
-  var actualData = JSON.parse(localStorage.getItem("history"));
-  if(actualData.length > 20){
-    actualData.splice(0,1);
-    localStorage.setItem("history", JSON.stringify(actualData));
-  }else{
-    console.log("nothing to delete");
-  }
-}
-
-/**
  * This function stores the last user location 
  * @param {String} data - location data
  */
@@ -109,7 +96,6 @@ export {
   getFavorite,
   removeFavoriteItem,
   removeAllItems,
-  removeLastHistoryItem,
   setLastPosition,
   getLastPosition,
   resetLastPosition
