@@ -75,13 +75,20 @@ function removeLastHistoryItem(){
   }
 }
 
+/**
+ * This function stores the last user location 
+ * @param {String} data - location data
+ */
 function setLastPosition(data){
   var array = [data];
   localStorage.setItem("lastLocation", JSON.stringify(array));
 }
 
+/**
+ * Returns the last stored user location 
+ */
 function getLastPosition(){
-  return JSON.parse(localStorage.getItem("favorite"));
+  return JSON.parse(localStorage.getItem("lastLocation"));
 }
 
 /**
