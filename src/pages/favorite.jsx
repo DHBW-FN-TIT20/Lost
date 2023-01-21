@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Page, BlockTitle, List, ListItem, Button } from "framework7-react";
+import { Page, BlockTitle, List, ListItem, Button, Toggle, f7, f7ready } from "framework7-react";
 
 import {
   getFavorite,
@@ -17,6 +17,7 @@ class Favorite extends React.Component {
     this.state = {
       history: [],
       favorite: [],
+      isDarkmode: false,
     };
   }
 
@@ -28,6 +29,10 @@ class Favorite extends React.Component {
   };
   */
 
+  componentDidMount()
+ {
+  this.state
+ }
   /**
    * This function delets Favorite with given index
    * @param {Integer} index - Index of the item that will be removed
@@ -52,14 +57,18 @@ class Favorite extends React.Component {
     this.setState({ history: hist, favorite: fav });
   }
 
+  changeDarkmode = (evt) => {
+    evt ? f7.$el.removeClass('dark') : f7.$el.addClass('dark');
+    this.setState( { isDarkmode : !evt });
+  }
+
   render() {
     return (
-      <Page name="favorite" className="favourites" onPageTabShow={() => this.loadLocalStorage()}>
+      <Page name="favorite" className="favourites" onPageInit={() => console.log(f7.$el.hasClass('dark'))} onPageTabShow={() => this.loadLocalStorage()}>
         <BlockTitle>Favorites</BlockTitle>
         <List simpleList className="list">
           {this.state.favorite.map((item, idx) => (
             <ListItem
-              mediaItem
               key={idx}
             >
               <div>
@@ -71,10 +80,17 @@ class Favorite extends React.Component {
             </ListItem>
           ))}
         </List>
+        <BlockTitle>Settings</BlockTitle>
+        <List simpleList className="list">
+          <ListItem>
+            <div>Toggle Darkmode</div>
+            <Toggle checked={this.state.isDarkmode} onToggleChange={this.changeDarkmode} />
+          </ListItem>
+        </List>
         <BlockTitle>History</BlockTitle>
         {this.state.history.length > 0 ?
           <List simpleList className="list">
-            {this.state.history.map((item, idx) => (
+            {this.state.history.reverse().map((item, idx) => (
               <ListItem
                 key={idx}
               >
@@ -85,6 +101,7 @@ class Favorite extends React.Component {
                 <Button iconSize={20} icon="f7:placemark" iconMd="f7:placemark" iconIos="f7:placemark" iconAurora="f7:placemark" fill onClick={() => setLastPosition(item)} />
               </ListItem>
             ))}
+            <ListItem className="end">History end</ListItem>
           </List> : null}
       </Page>
     );
