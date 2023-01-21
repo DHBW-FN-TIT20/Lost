@@ -56,10 +56,7 @@ function removeFavoriteItem(index) {
   if (actualData) {
     actualData.splice(index, 1);
     localStorage.setItem("favorite", JSON.stringify(actualData));
-  } else {
-    console.log("nothing to delete");
   }
-  
 }
 
 /**

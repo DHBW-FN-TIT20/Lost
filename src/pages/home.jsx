@@ -178,7 +178,7 @@ class Home extends React.Component {
     return (
       <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.loadLastPosition} onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }); console.log(rt) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
+        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
         <SheetModal ref={this.modal}>
           {/* The content of the sheet modal shows in 3 diffrent states. Highest priority has the route information. If no routing is not active, information about the specified location is displayed. Otherwise it shows nothing. */}
           {/* This upper part shows the active instruction of the routing or the heading of the article about the specified place above the buttons. */}
