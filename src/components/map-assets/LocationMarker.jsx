@@ -17,7 +17,6 @@ function LocationMarker(props) {
   const map = useMapEvents({
     click(e) {
       props.handlePositionChange(e.latlng);
-      map.setView(e.latlng);
     }
   });
 

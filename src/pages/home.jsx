@@ -18,6 +18,7 @@ import formatTime from '../js/helpers/formattime';
 
 // style sheets
 import '../css/home.scss'
+import { getFavorite, removeFavoriteItem, storeFavorite, storeHistory, getLastPosition, resetLastPosition } from '../js/localStorage';
 
 // import leaflet stuff
 // import nominatim stuff
@@ -34,7 +35,12 @@ class Home extends React.Component {
         title: null,
         text: null
       },
+      isFavourite: false,
       address: null
+    };
+    this.curLocation = {
+      lat: null,
+      lng: null
     };
     this.modal = React.createRef(null);
     // workaround https://github.com/react-grid-layout/react-draggable/issues/550
@@ -99,6 +105,20 @@ class Home extends React.Component {
    * This function handels the action for adding or removing the current location from the favourites list.
    */
   handleFavouritesClick = async () => {
+    if (this.curLocation.lat && this.curLocation.lng) {
+      console.log(this.state.isFavourite);
+      if (this.state.isFavourite) {
+        let favs = getFavorite();
+        let idx = favs.findIndex(m => m.address == this.state.address);
+        if (idx) {
+          removeFavoriteItem(idx);
+          this.setState({ isFavourite: false });
+        }
+      } else {
+        storeFavorite({ address: { country: this.state.address.country, postcode: this.state.address.postcode, location: this.state.address.location, road: this.state.address.road, house_number: this.state.address.house_number }, pos: this.curLocation });
+        this.setState({ isFavourite: true });
+      }
+    }
   }
 
   /**
@@ -107,7 +127,8 @@ class Home extends React.Component {
    * @param {LatLng} pos - 
    */
   getWikiInfo = async (pos) => {
-    this.setState({ content: { title: 'loading...' } });
+    this.setState({ article: { title: 'Loading...' } });
+    this.curLocation = { lat: pos.lat, lng: pos.lng };
     getLocationInfo(pos.lat, pos.lng)
       .then((place) => {
         let location;
@@ -123,17 +144,29 @@ class Home extends React.Component {
         wikiSearch(pos.lat, pos.lng, location)
           .then((content) => {
             place.address.location = location;
-            this.setState({ address: place.address, article: content })
+            let favs = getFavorite();
+            let isFav = favs.some(m => m.address.country == place.address.country
+              && m.address.postcode == m.address.postcode
+              && m.address.location == place.address.location
+              && m.address.road == place.address.road
+              && m.address.house_number == place.address.house_number);
+            storeHistory({ address: { country: place.address.country, postcode: place.address.postcode, location: place.address.location, road: place.address.road, house_number: place.address.house_number }, pos: this.curLocation });
+            this.setState({ address: place.address, article: content, isFavourite: isFav })
             this.modal.current.middle();
           });
       })
   }
 
+  loadLastPosition = () => {
+    let position = getLastPosition();
+    if(position) this.map.setPosition(position.pos);
+  }
+
   render() {
     return (
-      <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
+      <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.loadLastPosition} onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => {this.setState({ route: rt }); console.log(rt)}} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
+        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }); console.log(rt) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
         <SheetModal ref={this.modal}>
           {/* The content of the sheet modal shows in 3 diffrent states. Highest priority has the route information. If no routing is not active, information about the specified location is displayed. Otherwise it shows nothing. */}
           {/* This upper part shows the active instruction of the routing or the heading of the article about the specified place above the buttons. */}
@@ -168,10 +201,10 @@ class Home extends React.Component {
             <Button ref={this.navigateBtn} onClick={this.handleNavigationClick} fill={!this.state.isRouting} outline={this.state.isRouting} className='startNavBtn'>
               {this.state.isRouting ? 'Stop' : 'Navigate'}
             </Button>
-            <Button ref={this.favouriteBtn} onClick={this.handleFavouritesClick} className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
+            <Button ref={this.favouriteBtn} onClick={this.handleFavouritesClick} className='favBtn' iconIos={`f7:star${this.state.isFavourite ? '_fill' : null}`} iconAurora={`f7:star${this.state.isFavourite ? '_fill' : null}`} iconMd={`f7:star${this.state.isFavourite ? '_fill' : null}`} outline />
           </div>
           {!this.state.route ?
-                <Block>
+            <Block>
               {this.state.address ?
                 <>
                   <h3>
@@ -188,10 +221,10 @@ class Home extends React.Component {
                   <p>
                     {this.state.article.text}
                   </p>
-                </> : 
-                <span>Select a place on the map to find out more info about it here. <br/>Nothing to see here...</span>
-                }
-                </Block>
+                </> :
+                <span>Select a place on the map to find out more info about it here. <br />Nothing to see here...</span>
+              }
+            </Block>
             :
             <List>
               {this.state.route.instructions.slice(1).map((instruction, index) =>

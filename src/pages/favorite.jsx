@@ -54,9 +54,9 @@ class Favorite extends React.Component {
 
   render() {
     return (
-      <Page name="favorite" onPageTabShow={() => this.loadLocalStorage()}>
+      <Page name="favorite" className="favourites" onPageTabShow={() => this.loadLocalStorage()}>
         <BlockTitle>Favorites</BlockTitle>
-        <List simpleList className="favourites-list">
+        <List simpleList className="list">
           {this.state.favorite.map((item, idx) => (
             <ListItem
               mediaItem
@@ -64,22 +64,26 @@ class Favorite extends React.Component {
             >
               <div>
                 <span>{item.address.location}</span>
-                <span>{item.address.road} {item.address.house_number}</span>              
+                <span>{item.address.road} {item.address.house_number}</span>
               </div>
-              <Button iconSize={20} icon="f7:placemark" iconMd="f7:placemark" iconIos="f7:placemark" iconAurora="f7:placemark" fill onClick={() => setLastPosition(item)} />
               <Button iconSize={20} icon="f7:trash" iconMd="f7:trash" iconIos="f7:trash" iconAurora="f7:trash" fill onClick={() => this.removeItemOnIndex(idx)} />
+              <Button iconSize={20} icon="f7:placemark" iconMd="f7:placemark" iconIos="f7:placemark" iconAurora="f7:placemark" fill onClick={() => setLastPosition(item)} />
             </ListItem>
           ))}
         </List>
         <BlockTitle>History</BlockTitle>
         {this.state.history.length > 0 ?
-          <List simpleList>
+          <List simpleList className="list">
             {this.state.history.map((item, idx) => (
               <ListItem
                 key={idx}
-                title={item.address.location}
-                onClick={() => setLastPosition(item)}
-              ></ListItem>
+              >
+                <div>
+                  <span>{item.address.location}</span>
+                  <span>{item.address.road} {item.address.house_number}</span>
+                </div>
+                <Button iconSize={20} icon="f7:placemark" iconMd="f7:placemark" iconIos="f7:placemark" iconAurora="f7:placemark" fill onClick={() => setLastPosition(item)} />
+              </ListItem>
             ))}
           </List> : null}
       </Page>

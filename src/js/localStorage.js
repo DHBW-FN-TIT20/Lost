@@ -80,7 +80,7 @@ function removeLastHistoryItem(){
  * @param {String} data - location data
  */
 function setLastPosition(data){
-  var array = [data];
+  var array = data;
   localStorage.setItem("lastLocation", JSON.stringify(array));
 }
 
@@ -89,6 +89,10 @@ function setLastPosition(data){
  */
 function getLastPosition(){
   return JSON.parse(localStorage.getItem("lastLocation"));
+}
+
+function resetLastPosition(){
+  localStorage.setItem("lastLocation", null);
 }
 
 /**
@@ -107,5 +111,6 @@ export {
   removeAllItems,
   removeLastHistoryItem,
   setLastPosition,
-  getLastPosition
+  getLastPosition,
+  resetLastPosition
 };

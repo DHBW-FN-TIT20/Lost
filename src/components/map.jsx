@@ -142,6 +142,12 @@ class Map extends React.Component {
     this.props.handleInstructionsUpdate(null);
   }
 
+  setPosition(pos) {
+    this.map.current.setView(new L.LatLng(pos.lat, pos.lng))
+    this.setState({ locationPos: pos });
+    this.props.onPositionUpdate(pos);
+  }
+
   render() {
     return (
       <>
@@ -151,7 +157,7 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <LocationMarker position={this.state.locationPos} handlePositionChange={pos => { this.setState({ locationPos: pos }); this.props.onPositionUpdate(pos); }} />
+          <LocationMarker position={this.state.locationPos} handlePositionChange={pos => this.setPosition(pos)} />
           <UserLocationMarker position={this.state.currentPos} />
 
         </MapContainer>
