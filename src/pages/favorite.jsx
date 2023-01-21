@@ -18,13 +18,18 @@ class Favorite extends React.Component {
     };
   }
 
-  //Example JSON object structure of a favorite/history item
+  /* Example JSON object structure of a favorite/history item
   favoriteItem = {
     adress: "Erbach",
     lat: 48.0,
     lon: 50.0,
   };
+  */
 
+  /**
+   * This function delets Favorite with given index
+   * @param {Integer} index - Index of the item that will be removed
+   */
   removeItemOnIndex(index){
     removeFavoriteItem(index);
     this.loadLocalStorage();
