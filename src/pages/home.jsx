@@ -171,9 +171,9 @@ class Home extends React.Component {
             <Button ref={this.favouriteBtn} onClick={this.handleFavouritesClick} className='favBtn' iconIos='f7:star' iconAurora='f7:star' iconMd='f7:star' outline />
           </div>
           {!this.state.route ?
-            <>
-              {this.state.address ?
                 <Block>
+              {this.state.address ?
+                <>
                   <h3>
                     <Icon icon='f7:placemark' md='f7:placemark' aurora='f7:placemark' ios='f7:placemark' /> Adresse
                   </h3>
@@ -188,8 +188,10 @@ class Home extends React.Component {
                   <p>
                     {this.state.article.text}
                   </p>
-                </Block> : null}
-            </>
+                </> : 
+                <span>Select a place on the map to find out more info about it here. <br/>Nothing to see here...</span>
+                }
+                </Block>
             :
             <List>
               {this.state.route.instructions.slice(1).map((instruction, index) =>
