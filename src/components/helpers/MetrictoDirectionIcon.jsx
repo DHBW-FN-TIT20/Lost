@@ -9,6 +9,9 @@ import { Icon } from "framework7-react";
  */
 const getDirectionIconFromModifier = (type, modifier) => {
   let iconType = '';
+  if (!modifier) {
+    modifier = type;
+  }
   switch (modifier) {
     case 'Continue':
     case 'Straight':
