@@ -15,8 +15,10 @@ import Map from '../components/map';
 import SheetModal from '../components/modal';
 
 // helper functions
+import getDirectionIconFromModifier from '../components/helpers/MetrictoDirectionIcon';
 import getLocationInfo from '../js/API/nominatimAPI';
 import wikiSearch from '../js/API/wikiAPI';
+import formatTime from '../js/helpers/formattime';
 
 // style sheets
 import '../css/home.scss'
@@ -25,46 +27,6 @@ import '../css/home.scss'
 // import nominatim stuff
 // import wikipedia stuff
 // import Routenberechnungs stuff
-
-const getIcon = (type, modifier) => {
-  let iconType = '';
-  switch (modifier) {
-    case 'Continue':
-    case 'Straight':
-    case 'Head':
-      iconType = 'arrow_up'
-      break;
-    case 'EndOfRoad':
-      iconType = 'arrow_up_to_line'
-      break;
-    case 'SlightLeft':
-      iconType = 'arrow_up_left'
-      break;
-    case 'Left':
-      iconType = 'arrow_turn_up_left'
-      break;
-    case 'SlightRight':
-      iconType = 'arrow_up_right'
-      break;
-    case 'Right':
-      iconType = 'arrow_turn_up_right'
-      break;
-    default:
-      if (type = 'DestinationReached') {
-        iconType = 'flag'
-      }
-      break;
-  }
-  return (
-    <Icon f7={iconType} />
-  )
-}
-
-const formatTime = (seconds) => {
-  let date = new Date(null);
-  date.setSeconds(seconds);
-  return date.toISOString().slice(11, 19);
-}
 
 class Home extends React.Component {
   constructor(props) {
@@ -165,7 +127,7 @@ class Home extends React.Component {
     return (
       <Page name="home" className='home' onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} onPositionUpdate={(pos) => this.getWikiInfo(pos)} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.lower(); }} />
+        <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => this.setState({ route: rt })} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
         <SheetModal ref={this.modal}>
           {!this.state.route ?
             <h3 className='article-title'>{this.state.article.title}</h3>
@@ -186,7 +148,7 @@ class Home extends React.Component {
                 </div>
                 <List className='first-instruction'>
                   <ListItem>
-                    {getIcon(this.state.route.instructions[0].type, this.state.route.instructions[0].modifier)}
+                    {getDirectionIconFromModifier(this.state.route.instructions[0].type, this.state.route.instructions[0].modifier)}
                     <span>{this.state.route.instructions[0].text}</span>
                     <span>{this.state.route.instructions[0].distance}m</span>
                   </ListItem>
@@ -224,7 +186,7 @@ class Home extends React.Component {
               {this.state.route.instructions.slice(1).map((instruction, index) =>
               (
                 <ListItem key={index} >
-                  {getIcon(instruction.type, instruction.modifier)}
+                  {getDirectionIconFromModifier(instruction.type, instruction.modifier)}
                   <span>{instruction.text}</span>
                   <span>{instruction.distance}m</span>
                 </ListItem>
