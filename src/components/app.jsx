@@ -3,7 +3,6 @@ import React from 'react';
 import {
   App,
   Link,
-  Page,
   Toolbar,
   View,
   Views

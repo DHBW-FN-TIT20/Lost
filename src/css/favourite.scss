@@ -1,0 +1,41 @@
+.favourites {
+  .page-content>div {
+    max-width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .list {
+    li {
+      justify-content: normal;
+      height: unset;
+
+      div:first-child {
+        flex: 1;
+        word-wrap: break-word;
+        word-break: break-all;
+        min-width: 0px;
+        overflow: hidden;
+        padding: 10px 0;
+
+        span {
+          display: block;
+          line-height: normal;
+          padding: 6px 0;
+
+          &:not(:first-of-type) {
+            color: var(--f7-tabbar-link-inactive-color);
+          }
+        }
+      }
+
+      a {
+        margin-left: 10px
+      }
+
+      &.end {
+        color: var(--f7-tabbar-link-inactive-color);
+        font-style: italic;
+      }
+    }
+  }
+}

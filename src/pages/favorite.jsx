@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Page, BlockTitle, List, ListItem, Button } from "framework7-react";
+import { Page, BlockTitle, List, ListItem, Button, Toggle, f7 } from "framework7-react";
 
 import {
   getFavorite,
@@ -9,28 +9,23 @@ import {
   setLastPosition,
 } from "../js/localStorage";
 
+import '../css/favourite.scss';
+
 class Favorite extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       history: [],
       favorite: [],
+      isDarkmode: false,
     };
   }
 
-  /* Example JSON object structure of a favorite/history item
-  favoriteItem = {
-    adress: "Erbach",
-    lat: 48.0,
-    lon: 50.0,
-  };
-  */
-
   /**
-   * This function delets Favorite with given index
-   * @param {Integer} index - Index of the item that will be removed
+   * This function deletes a favorite, that the user has favorized before. The favorite is identified by the given index.
+   * @param {Integer} index - Index of the item/favorite that will be removed
    */
-  removeItemOnIndex(index){
+  removeItemOnIndex(index) {
     removeFavoriteItem(index);
     this.loadLocalStorage();
   }
@@ -42,41 +37,65 @@ class Favorite extends React.Component {
     var hist = getHistory();
     var fav = getFavorite();
     if (!hist) {
-      hist = ["Your history is empty!"];
+      hist = [];
     }
     if (!fav) {
-      fav = ["Your favorite list is empty!"];
+      fav = [];
     }
     this.setState({ history: hist, favorite: fav });
   }
 
+  /**
+   * This function gets called if the dark mode toggle changes.
+   * It changes the current dark/white mode depending on the {@link evt} parameter.
+   * @param {boolean} evt - event state
+   */
+  changeDarkmode = (evt) => {
+    evt ? f7.$el.removeClass('dark') : f7.$el.addClass('dark');
+    this.setState( { isDarkmode : !evt });
+  }
+
   render() {
     return (
-      <Page name="favorite" onPageTabShow={() => this.loadLocalStorage()}>
+      <Page name="favorite" className="favourites" onPageTabShow={() => this.loadLocalStorage()}>
         <BlockTitle>Favorites</BlockTitle>
-        <List simpleList>
-          {this.state.favorite.map((item, index) => (
+        <List simpleList className="list">
+          {this.state.favorite.map((item, idx) => (
             <ListItem
-              key={item.lat + item.lon}
-              title={item.adress}
-              onClick={() => setLastPosition(item)}
+              key={idx}
             >
-              <Button fill onClick={() => this.removeItemOnIndex(index)}>
-                Delete
-              </Button>
+              <div>
+                <span>{item.address.location}</span>
+                <span>{item.address.road} {item.address.house_number}</span>
+              </div>
+              <Button iconSize={20} icon="f7:trash" iconMd="f7:trash" iconIos="f7:trash" iconAurora="f7:trash" fill onClick={() => this.removeItemOnIndex(idx)} />
+              <Button iconSize={20} icon="f7:placemark" iconMd="f7:placemark" iconIos="f7:placemark" iconAurora="f7:placemark" fill onClick={() => setLastPosition(item)} />
             </ListItem>
           ))}
         </List>
-        <BlockTitle>History</BlockTitle>
-        <List simpleList>
-          {this.state.history.map((item) => (
-            <ListItem
-              key={item.lat + item.lon}
-              title={item.adress}
-              onClick={() => setLastPosition(item)}
-            ></ListItem>
-          ))}
+        <BlockTitle>Settings</BlockTitle>
+        <List simpleList className="list">
+          <ListItem>
+            <div>Toggle Darkmode</div>
+            <Toggle checked={this.state.isDarkmode} onToggleChange={this.changeDarkmode} />
+          </ListItem>
         </List>
+        <BlockTitle>History</BlockTitle>
+        {this.state.history.length > 0 ?
+          <List simpleList className="list">
+            {this.state.history.reverse().map((item, idx) => (
+              <ListItem
+                key={idx}
+              >
+                <div>
+                  <span>{item.address.location}</span>
+                  <span>{item.address.road} {item.address.house_number}</span>
+                </div>
+                <Button iconSize={20} icon="f7:placemark" iconMd="f7:placemark" iconIos="f7:placemark" iconAurora="f7:placemark" fill onClick={() => setLastPosition(item)} />
+              </ListItem>
+            ))}
+            <ListItem className="end">History end</ListItem>
+          </List> : null}
       </Page>
     );
   }

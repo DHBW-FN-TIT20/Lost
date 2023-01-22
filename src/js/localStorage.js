@@ -5,7 +5,7 @@
 function storeHistory(data) {
   var actualData = JSON.parse(localStorage.getItem("history"));
   if (actualData) {
-    removeLastHistoryItem();
+    if(actualData.length > 20) actualData.splice(0,1);
     actualData.push(data);
     localStorage.setItem("history", JSON.stringify(actualData));
   } else {
@@ -44,7 +44,7 @@ function storeFavorite(data) {
  * @returns the array of the favorite elements
  */
 function getFavorite() {
-  return JSON.parse(localStorage.getItem("favorite"));
+  return JSON.parse(localStorage.getItem("favorite")) ?? [];
 }
 
 /**
@@ -56,22 +56,6 @@ function removeFavoriteItem(index) {
   if (actualData) {
     actualData.splice(index, 1);
     localStorage.setItem("favorite", JSON.stringify(actualData));
-  } else {
-    console.log("nothing to delete");
-  }
-  
-}
-
-/**
- * This function removes the first (oldest) item of the history list, if the history list is greater than 20.   
- */
-function removeLastHistoryItem(){
-  var actualData = JSON.parse(localStorage.getItem("history"));
-  if(actualData.length > 20){
-    actualData.splice(0,1);
-    localStorage.setItem("history", JSON.stringify(actualData));
-  }else{
-    console.log("nothing to delete");
   }
 }
 
@@ -80,7 +64,7 @@ function removeLastHistoryItem(){
  * @param {String} data - location data
  */
 function setLastPosition(data){
-  var array = [data];
+  var array = data;
   localStorage.setItem("lastLocation", JSON.stringify(array));
 }
 
@@ -91,8 +75,12 @@ function getLastPosition(){
   return JSON.parse(localStorage.getItem("lastLocation"));
 }
 
+function resetLastPosition(){
+  localStorage.setItem("lastLocation", null);
+}
+
 /**
- * This function clears the whole localStorage
+ * This function removes everything that is located within the entire localStorage.
  */
 function removeAllItems() {
   localStorage.clear();
@@ -105,7 +93,7 @@ export {
   getFavorite,
   removeFavoriteItem,
   removeAllItems,
-  removeLastHistoryItem,
   setLastPosition,
-  getLastPosition
+  getLastPosition,
+  resetLastPosition
 };

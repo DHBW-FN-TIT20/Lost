@@ -4,6 +4,17 @@
 
   z-index: inherit;
 
+  .leaflet-control-container {
+    .leaflet-bottom {
+      bottom: 20px;
+      left: 0;
+      right: unset;
+    }
+    .leaflet-top {
+      top: calc(var(--f7-searchbar-height) + var(--f7-searchbar-in-page-content-margin)) !important;
+    }
+  } 
+
   .leaflet-bar {
     border-color: transparent;
 
@@ -48,7 +59,7 @@
 
 .userPosBtn {
   position: absolute;
-  bottom: var(--f7-tabbar-labels-height);
+  bottom: calc(var(--f7-tabbar-labels-height) + 20px);
 
   height: var(--f7-tabbar-labels-height);
   width: var(--f7-tabbar-labels-height);
@@ -70,11 +81,4 @@
   &.locating {
     color: var(--f7-theme-color) !important;
   }
-}
-
-.startNavBtn {
-  position: absolute;
-  top: 0;
-  z-index: 5;
-  left: 50%;
 }

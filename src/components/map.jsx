@@ -1,14 +1,15 @@
 import React, { createRef } from "react";
+import { MapContainer, TileLayer } from 'react-leaflet';
+import LocationMarker from "./map-assets/LocationMarker";
+import UserLocationMarker from "./map-assets/UserLocationMarker";
+import { Button, f7 } from "framework7-react";
+// leaflet/map
 import 'leaflet/dist/leaflet.css';
 import Leaflet from 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
-import LocationMarker from "./map-assets/LocationMarker";
-import UserLocationMarker from "./map-assets/UserLocationMarker";
-
+// style sheet
 import '../css/map.scss';
-import { Button, f7 } from "framework7-react";
 
 class Map extends React.Component {
   constructor(props) {
@@ -23,21 +24,30 @@ class Map extends React.Component {
       isLocating: false,
       routing: null,
     };
+    this.lastPositions = {
+      lasCurrentPos: null,
+      lastLocationPos: null
+    }
+    this.updateMap = false;
   }
 
   /**
-   * This function invokes after updating occurs.
+   * This function gets called after the Component has been updated.
    * Checks if routing is active and updates start and destination waypoints if so.
    */
   componentDidUpdate() {
-    // This part updates the route
+    // This code section updates the route
     if (this.state.routing != null) {
-      this.state.routing.setWaypoints(
-        [
-          this.state.currentPos.latlng,
-          this.state.locationPos
-        ]
-      );
+      if (this.lastPositions.lasCurrentPos != this.state.currentPos ||
+        this.lastPositions.lastLocationPos != this.state.locationPos) {
+        this.lastPositions.lasCurrentPos = this.state.currentPos;
+        this.lastPositions.lastLocationPos = this.state.locationPos;
+        this.state.routing.setWaypoints(
+          [
+            this.state.currentPos.latlng,
+            this.state.locationPos
+          ]);
+      }
     }
   }
 
@@ -99,7 +109,7 @@ class Map extends React.Component {
         ],
         show: false,
         collapsible: false,
-        createMarker: function() { return null; },
+        createMarker: function () { return null; },
         lineOptions: {
           styles: [
             {
@@ -109,19 +119,39 @@ class Map extends React.Component {
           ],
         }
       }).addTo(this.map.current);
-      this.setState({
-        routing : routing 
-      });
+
+
+      routing.on('routesfound', (e) => {
+        this.updateMap = false;
+        this.setState({
+          routing: routing,
+        });
+        this.props.handleInstructionsUpdate(e.routes[0]);
+      })
+      this.props.handleRouting(true);
     }
   }
 
   /**
-   * This function will be called when the user wants to stop the routing via a button press on the front-end.
-   * Ends and removes the route from the map.
+   * This function is called when the user wants to stop the routing via a button press on the front-end.
+   * It ends and removes the route from the map.
    */
   stopNavigation() {
     this.state.routing.remove();
-    this.setState({routing: null});
+    this.setState({ routing: null });
+    this.props.handleRouting(false);
+    this.props.handleInstructionsUpdate(null);
+  }
+
+  /**
+   * This function updates the Locationmarker position.
+   * It triggers the parent "onPositionUpdate" event.
+   * @param {{number, number}} pos - position data (lat/lng)
+   */
+  setPosition(pos) {
+    this.map.current.setView(new L.LatLng(pos.lat, pos.lng))
+    this.setState({ locationPos: pos });
+    this.props.onPositionUpdate(pos);
   }
 
   render() {
@@ -133,13 +163,11 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <LocationMarker setCoordinates={pos => this.setState({locationPos: pos})} />
+          <LocationMarker position={this.state.locationPos} handlePositionChange={pos => this.setPosition(pos)} />
           <UserLocationMarker position={this.state.currentPos} />
 
         </MapContainer>
-        <Button onClick={() => this.state.routing ? this.stopNavigation() :  this.startNavigation() } outline className='startNavBtn'>
-          { this.state.routing ? "Stop" : "Navigate" }
-        </Button>
+        <div>{this.state.distance} - {this.state.time}</div>
         <Button onClick={() => this.state.isLocating ? this.stopLocalization() : this.startLocalization()} className={`userPosBtn ${this.state.isLocating ? 'locating' : null}`} fill
           iconIos={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconF7={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} iconMd={this.state.isLocating ? 'f7:location_slash' : 'f7:location'} />
       </>
