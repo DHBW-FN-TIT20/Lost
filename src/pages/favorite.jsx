@@ -25,15 +25,6 @@ class Favorite extends React.Component {
   }
 
   /**
-   * This function gets called after the component got mounted to the DOM-Tree.
-   * Sets the state of isDarkmode
-   */
-  componentDidMount() {
-    var dark = isDarkmodeAktive()
-    this.setState( { isDarkmode : dark });
-  }
-
-  /**
    * This function deletes a favorite, that the user has favorized before. The favorite is identified by the given index.
    * @param {Integer} index - Index of the item/favorite that will be removed
    */
@@ -67,9 +58,18 @@ class Favorite extends React.Component {
     changeDarkmode(!evt)
   }
 
+  /**
+   * This function ist called on page init. It calls loadLocalStorage and sets the state of isDarkmode
+   */
+  initPage = () =>{
+    this.loadLocalStorage()
+    var dark = isDarkmodeAktive()
+    this.setState( { isDarkmode : dark });
+  }
+
   render() {
     return (
-      <Page name="favorite" className="favourites" onPageTabShow={() => this.loadLocalStorage()}> 
+      <Page name="favorite" className="favourites" onPageTabShow={() => this.initPage()}> 
         <BlockTitle>Favorites</BlockTitle>
         <List simpleList className="list">
           {this.state.favorite.map((item, idx) => (

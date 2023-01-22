@@ -1,4 +1,3 @@
-  
   import {setDarkmode} from "../js/localStorage";
   import {f7} from "framework7-react";
   
