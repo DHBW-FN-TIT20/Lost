@@ -95,7 +95,7 @@ function setDarkmode(state){
 }
 
 /**
- * Returns true if darkmode is set
+ * This function checks if the darkmode is currently on and returns true if it is set, false if it is not.
  */
 function isDarkmodeAktive(){
   var state = JSON.parse(localStorage.getItem("darkmode"));
