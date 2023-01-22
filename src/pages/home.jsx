@@ -143,7 +143,7 @@ class Home extends React.Component {
   }
 
   /**
-   * This function ist called on page init. It calls the Map and checks for darkmode 
+   * This function is called on the init page. It updates the map component and checks if darkmode should be on (if yes it turns it on).
    */
   initPage = () =>{
     this.map.rerenderMap()

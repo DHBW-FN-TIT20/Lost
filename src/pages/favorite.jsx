@@ -50,7 +50,7 @@ class Favorite extends React.Component {
 
   /**
    * This function gets called if the dark mode toggle changes.
-   * sets the state and calls changeDarkmode
+   * It updates the state-variable which represents the status of dark mode and calls changeDarkmode()
    * @param {boolean} evt - event state
    */
   toggleDarkmode = (evt) => {
@@ -59,7 +59,7 @@ class Favorite extends React.Component {
   }
 
   /**
-   * This function ist called on page init. It calls loadLocalStorage and sets the state of isDarkmode
+   * This function is called on the init page. It calls loadLocalStorage() and updates the state variable which represents the current status of darkmode
    */
   initPage = () =>{
     this.loadLocalStorage()
