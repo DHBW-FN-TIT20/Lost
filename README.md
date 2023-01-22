@@ -22,7 +22,7 @@
 - [Ralf Ehli](https://github.com/Ehlikopter)
 
 ### :clipboard: Task
-> "Entwickeln Sie eine Web-Applikation die innerhalb eines Location-Based-Service eines Karte darstellt. Innerhalb der Karte soll eine Position (oder aktueller Standort) mit ihren Geo-Koordinaten ausgewählt werden können. Über diese Koordinaten soll mittels Reverse-Geocoding der Ort ermittelt und über Wikipedia die enstsprechenden Information zur Örtlichkeit ausgelesen und visualisiert werden" Anschließend soll die Fahrroute von der gegenwärtigen Position zum ausgewählten Ort dargestellt werden. [more](#task)
+> "Entwickeln Sie eine Web-Applikation die innerhalb eines Location-Based-Service eines Karte darstellt. Innerhalb der Karte soll eine Position (oder aktueller Standort) mit ihren Geo-Koordinaten ausgewählt werden können. Über diese Koordinaten soll mittels Reverse-Geocoding der Ort ermittelt und über Wikipedia die enstsprechenden Information zur Örtlichkeit ausgelesen und visualisiert werden" Anschließend soll die Fahrroute von der gegenwärtigen Position zum ausgewählten Ort dargestellt werden.
 
 ### Scrum
 
@@ -33,14 +33,6 @@ We use Notion to plan, document and define our Scrum development.
     View Notion page
 </a>
 
-## Install
-
-
-:running_woman: Run
-Run react server with:
-```console
-npm start
-```
 ## :information_source: More
 ### :exclamation: Contributing
 Please read through our [contributing guidelines](.github/CONTRIBUTING.md).
