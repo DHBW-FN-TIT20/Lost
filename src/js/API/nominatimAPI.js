@@ -1,6 +1,3 @@
-//getLocationInfo(48.401081,9.987608).then((props) => {console.log(props)})
-//getSearchLocation("Ulm alb-donau-kreis").then((props) => {console.log(props)})
-
 import httpGet from "./httpGetAPI";
 
 /**
@@ -20,8 +17,8 @@ function makeLocationUrl(lat, lon) {
 }
 
 /**
- * This function calls the {@link makeLocationUrl} method to generate a URL and calls the {@link httpGet} method for a HTTP GET request.
- * @param {*} callback - The callback of the HTTP GET request
+ * This function calls the {@link makeLocationUrl} method to generate a URL and calls the {@link httpGet} method for a http get request.
+ * @param {*} callback - The callback of the http get request
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  */
@@ -37,7 +34,7 @@ function getLocationJSON(callback, lat, lon) {
 }
 
 /**
- * This function generates the url for the search API call
+ * This function generates the url for the Nominatim-API (search) call
  * @param {String} search
  * @returns the url
  */
@@ -48,8 +45,8 @@ function makeSearchUrl(search) {
 }
 
 /**
- * This function calls the {@link makeSearchUrl} method to generate a URL and calls the {@link httpGet} method for a HTTP GET request.
- * @param {*} callback - The callback of the HTTP GET request
+ * This function calls the {@link makeSearchUrl} method to generate a URL and calls the {@link httpGet} method for a http get request.
+ * @param {*} callback - The callback of the http get request
  * @param {String} search - The search arguments
  */
 function getSearchJSON(callback, search) {
@@ -64,11 +61,12 @@ function getSearchJSON(callback, search) {
 }
 
 /**
- * This function calls the {@link getLocationJSON} method. 
+ * This function calls the {@link getLocationJSON} method to get a requested location (specified by lat and lon),
+ * which will be returned as a promise. The promise can only be resolved.
  * @param {Float} lat - The latitude of the coordinate
  * @param {Float} lon - The longitude of the coordinate
  *
- * @returns A promise of the API call response
+ * @returns The promise, that contains the API Call response (the requested location).
  */
 function getLocationInfo(lat, lon) {
   return new Promise((resolve, reject) => {
