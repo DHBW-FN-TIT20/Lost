@@ -86,6 +86,25 @@ function removeAllItems() {
   localStorage.clear();
 }
 
+/**
+ * This function sets/ resets darkmode
+ * @param {bool} state 
+ */
+function setDarkmode(state){
+  localStorage.setItem("darkmode", state);
+}
+
+/**
+ * Returns true if darkmode is set
+ */
+function isDarkmodeAktive(){
+  var state = JSON.parse(localStorage.getItem("darkmode"));
+  if (!state){ //necessary to catch if darkmode key does not exist 
+    return false
+  }
+  return true
+}
+
 export {
   storeHistory,
   getHistory,
@@ -95,5 +114,7 @@ export {
   removeAllItems,
   setLastPosition,
   getLastPosition,
-  resetLastPosition
+  resetLastPosition,
+  setDarkmode,
+  isDarkmodeAktive
 };

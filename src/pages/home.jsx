@@ -10,6 +10,8 @@ import {
 import Map from '../components/map';
 import SheetModal from '../components/modal';
 import SearchbarMap from "../components/searchbar";
+import {changeDarkmode} from "../js/darkmode";
+import {isDarkmodeAktive} from "../js/localStorage";
 
 // helper functions
 import getDirectionIconFromModifier from '../components/helpers/MetrictoDirectionIcon';
@@ -126,6 +128,7 @@ class Home extends React.Component {
   }
 
   handlePageShow = () => {
+
     this.map.rerenderMap();
     // load last Position if available
     if (this.curLocation.lat && this.curLocation.lng) {
@@ -140,9 +143,15 @@ class Home extends React.Component {
     if (position) this.map.setPosition(position.pos);
   }
 
+  initPage = () =>{
+    this.map.rerenderMap()
+    var dark = isDarkmodeAktive()
+    changeDarkmode(dark)
+  }
+
   render() {
     return (
-      <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.handlePageShow} onPageInit={() => this.map.rerenderMap()}>
+      <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.handlePageShow} onPageInit={() => this.initPage()}>
         {/* Page content */}
         <SearchbarMap handleSearch={(pos) => this.map.setPosition(pos)} />
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
