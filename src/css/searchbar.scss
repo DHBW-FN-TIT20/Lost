@@ -1,0 +1,10 @@
+.searchResults{
+  margin: 5px;
+  position: absolute;
+  z-index: 5;
+  width: calc(100% - 10px);
+
+  .loading .item-content .item-inner {
+    justify-content: center;
+  }
+}

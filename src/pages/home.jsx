@@ -9,10 +9,11 @@ import {
 } from 'framework7-react';
 import Map from '../components/map';
 import SheetModal from '../components/modal';
+import SearchbarMap from "../components/searchbar";
 
 // helper functions
 import getDirectionIconFromModifier from '../components/helpers/MetrictoDirectionIcon';
-import getLocationInfo from '../js/API/nominatimAPI';
+import { getLocationInfo } from '../js/API/nominatimAPI';
 import wikiSearch from '../js/API/wikiAPI';
 import formatTime from '../js/helpers/formattime';
 
@@ -65,30 +66,28 @@ class Home extends React.Component {
   /**
    * This function searches for a Location by text or its OSM ID and returns the location
    * @param {string} pSearch - This is the text which is put into the search field
-   * @param {string | undefined} osmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database. 
+   * @param {string | undefined} osmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database.
    * (https://web.locationiq.com/glossary/osm-id)
    */
   searchLocation = async (pSearch, osmID = undefined) => {
     // if the OSM ID is undefined, use text search
-  }
+  };
 
   /**
    * This function  calls the nominatim API with a text search and returns a place
    * @param {*} pSearch - This is the text which is put into the search field
    */
-  getLocByText = async pSearch => {
-  }
+  getLocByText = async (pSearch) => { };
 
   /**
    * This function calls the nominatim API with a text search and returns a place
    * @param {*} pCoordinates - These are the Coordiantes that have been put into the search field
    */
-  getLocByCoords = async (pCoordinates) => {
-  }
+  getLocByCoords = async (pCoordinates) => { };
 
   /**
    * This function calls the nominatim API with a text search and returns a place
-   * @param {*} pOsmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database. 
+   * @param {*} pOsmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database.
    */
   getLocByOsmID = async pOsmID => {
   }
@@ -178,6 +177,7 @@ class Home extends React.Component {
     return (
       <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.loadLastPosition} onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
+        <SearchbarMap />
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
         <SheetModal ref={this.modal}>
           {/* The content of the sheet modal shows in 3 diffrent states. Highest priority has the route information. If no routing is not active, information about the specified location is displayed. Otherwise it shows nothing. */}
