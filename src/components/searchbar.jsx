@@ -14,16 +14,16 @@ class SearchbarMap extends React.Component {
 
   /**
    * This function updates the search results 
-   * @param {*} evt - The search string
+   * @param {*} searchEvent - The search string
    */
-  updateInputValue(evt) {
+  updateInputValue(searchEvent) {
     if (!this.state.isSearchResults) {
       this.setState({
         isSearchResults: true,
       });
     }
-    getSearchLocation(evt.target.value).then((props) => {
-      if (props.search == evt.target.value) {
+    getSearchLocation(searchEvent.target.value).then((props) => {
+      if (props.search == searchEvent.target.value) {
         this.setState({
           searchResults: props.location,
         });
