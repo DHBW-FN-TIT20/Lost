@@ -153,7 +153,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.handlePageShow} onPageInit={() => this.initPage()}>
+      <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.handlePageShow} onPageInit={this.initPage}>
         {/* Page content */}
         <SearchbarMap handleSearch={(pos) => this.map.setPosition(pos)} />
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />

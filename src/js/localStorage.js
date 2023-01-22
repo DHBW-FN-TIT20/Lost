@@ -99,10 +99,7 @@ function setDarkmode(state){
  */
 function isDarkmodeAktive(){
   var state = JSON.parse(localStorage.getItem("darkmode"));
-  if (!state){ //necessary to catch if darkmode key does not exist 
-    return false
-  }
-  return true
+  return state ? true : false
 }
 
 export {

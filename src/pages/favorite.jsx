@@ -69,7 +69,7 @@ class Favorite extends React.Component {
 
   render() {
     return (
-      <Page name="favorite" className="favourites" onPageTabShow={() => this.initPage()}> 
+      <Page name="favorite" className="favourites" onPageTabShow={this.initPage}> 
         <BlockTitle>Favorites</BlockTitle>
         <List simpleList className="list">
           {this.state.favorite.map((item, idx) => (
