@@ -24,6 +24,10 @@ class Favorite extends React.Component {
     };
   }
 
+  /**
+   * This function gets called after the component got mounted to the DOM-Tree.
+   * Sets the state of isDarkmode
+   */
   componentDidMount() {
     var dark = isDarkmodeAktive()
     this.setState( { isDarkmode : dark });

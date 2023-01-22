@@ -128,7 +128,6 @@ class Home extends React.Component {
   }
 
   handlePageShow = () => {
-
     this.map.rerenderMap();
     // load last Position if available
     if (this.curLocation.lat && this.curLocation.lng) {
@@ -143,6 +142,9 @@ class Home extends React.Component {
     if (position) this.map.setPosition(position.pos);
   }
 
+  /**
+   * This function ist called on page init. It calls the Map and checks for darkmode 
+   */
   initPage = () =>{
     this.map.rerenderMap()
     var dark = isDarkmodeAktive()
