@@ -80,7 +80,7 @@ function resetLastPosition(){
 }
 
 /**
- * This function clears the whole localStorage
+ * This function removes everything that is located within the entire localStorage.
  */
 function removeAllItems() {
   localStorage.clear();

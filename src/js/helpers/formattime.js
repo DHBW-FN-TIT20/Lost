@@ -1,5 +1,5 @@
 /**
- * This function returns the specified seconds into 'hh:mm:ss' format.
+ * This function converts a given amount of seconds into the 'hh:mm:ss' format and returns it.
  * @param {number} seconds - The total seconds
  * @returns 
  */

@@ -30,8 +30,8 @@ class Favorite extends React.Component {
   */
 
   /**
-   * This function delets Favorite with given index
-   * @param {Integer} index - Index of the item that will be removed
+   * This function deletes a favorite, that the user has favorized before. The favorite is identified by the given index.
+   * @param {Integer} index - Index of the item/favorite that will be removed
    */
   removeItemOnIndex(index) {
     removeFavoriteItem(index);

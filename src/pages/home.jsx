@@ -50,7 +50,7 @@ class Home extends React.Component {
   }
 
   /**
-   * This function invokes after the component did mount.
+   * This function gets called after the component got mounted to the DOM-Tree.
    * It add's custom touch events to the buttons inside the sheet modal. The buttons won't recognize the normal onClick event on touch devices otherwise.
    * This is a workaround for the current version of react-draggable.
    */
@@ -93,7 +93,7 @@ class Home extends React.Component {
   }
 
   /**
-   * This function handels the action for clicking the navigation-start/-stop button
+   * This function handles the action for clicking the navigation-start/-stop button
    * It start/stops the navigation process depending on the current routing state.
    */
   handleNavigationClick = async () => {
@@ -101,7 +101,7 @@ class Home extends React.Component {
   }
 
   /**
-   * This function handels the action for adding or removing the current location from the favourites list.
+   * This function handles the action for adding or removing the current location from the favorites list.
    */
   handleFavouritesClick = async () => {
     if (this.curLocation.lat && this.curLocation.lng) {
@@ -124,7 +124,7 @@ class Home extends React.Component {
   }
 
   /**
-   * This function get's info about the given position.
+   * This function gets infos about the given position.
    * The function updates the state variables for address information and the available article about that position.
    * @param {LatLng} pos - 
    */
@@ -161,7 +161,7 @@ class Home extends React.Component {
 
   handlePageShow = () => {
     this.map.rerenderMap();
-    // load last Position when available
+    // load last Position if available
     if (this.curLocation.lat && this.curLocation.lng) {
       let isFav = getFavorite().some(m => m.address.country == this.state.address.country
         && m.address.postcode == this.state.address.postcode
@@ -181,8 +181,8 @@ class Home extends React.Component {
         <SearchbarMap handleSearch={(pos) => this.map.setPosition(pos)} />
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
         <SheetModal ref={this.modal}>
-          {/* The content of the sheet modal shows in 3 diffrent states. Highest priority has the route information. If no routing is not active, information about the specified location is displayed. Otherwise it shows nothing. */}
-          {/* This upper part shows the active instruction of the routing or the heading of the article about the specified place above the buttons. */}
+          {/* The content of the sheet modal is shown in 3 diffrent states. The route information has the highest priority. If routing is not active, information about the specified location is displayed. Otherwise nothing is displayed. */}
+          {/* This upper part shows the active instructions of the routing or the heading of the article about the chosen place above the buttons. */}
           {!this.state.route ?
             <h3 className='article-title'>{this.state.article.title}</h3>
             :
@@ -235,7 +235,7 @@ class Home extends React.Component {
                     {this.state.article.text}
                   </p>
                 </> :
-                <span>Select a place on the map to find out more info about it here. <br />Nothing to see here...</span>
+                <span>Select a place on the map to find out more about it. <br />Nothing to see here...</span>
               }
             </Block>
             :

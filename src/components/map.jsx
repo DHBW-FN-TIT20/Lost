@@ -35,7 +35,7 @@ class Map extends React.Component {
    * Checks if routing is active and updates start and destination waypoints if so.
    */
   componentDidUpdate() {
-    // This part updates the route
+    // This code section updates the route
     if (this.state.routing != null) {
       if (this.lastPositions.lasCurrentPos != this.state.currentPos ||
         this.lastPositions.lastLocationPos != this.state.locationPos) {

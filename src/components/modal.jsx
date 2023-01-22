@@ -23,8 +23,8 @@ class SheetModal extends React.Component {
   }
 
   /**
-   * This function invokes after the component did mount.
-   * It adds custom release events on the component. This is done to lock the modal when the user is currently scrolling in it.
+   * This function gets called after the component got mounted to the DOM-Tree.
+   * It adds custom release events onto the component. This is done to lock the modal when the user is currently scrolling in it.
    */
   componentDidMount() {
     window.addEventListener('resize', () => this.positioning());
@@ -66,7 +66,7 @@ class SheetModal extends React.Component {
   }
 
   /**
-   * This function disables/deactivates the modal for dragging input.
+   * This function disables/deactivates the modal, so that dragging input will no longer be processed.
    */
   disable() {
     if (this.content.current.scrollHeight > this.content.current.clientHeight) {
@@ -75,7 +75,7 @@ class SheetModal extends React.Component {
   }
 
   /**
-   * This function enable the dragging of the modal.
+   * This function enables the dragging of the modal.
    */
   activate() {
     if (this.state.isDisabled) {
@@ -85,8 +85,8 @@ class SheetModal extends React.Component {
   }
 
   /**
-   * This function invokes when the user releases the modal.
-   * The function positions the modal on the next closest position: close/lower/middle/high
+   * This function gets called when the user lets go of the modal.
+   * The function positions the modal at the next closest position: close/lower/middle/high
    */
   positioning() {
     if (this.draggable.current.state.y < window.innerHeight * 0.3) {
@@ -105,7 +105,7 @@ class SheetModal extends React.Component {
   }
 
   /**
-   * This function checks if the user is currently scrolling and if so it disables the modal.
+   * This function checks if the user's currently scrolling. If yes, it disables the modal.
    */
   toggleLock() {
     if (this.content.current.scrollTop > 0) {
@@ -114,7 +114,7 @@ class SheetModal extends React.Component {
   }
 
   /**
-   * This function checks if the user is at the top of the scrolling and enables the modal.
+   * This function checks if the user has scrolled all the way to the top and enables the modal if that's the case.
    */
   toggleUnlock() {
     if (this.content.current.scrollTop == 0) {
