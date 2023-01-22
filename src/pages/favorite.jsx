@@ -29,10 +29,6 @@ class Favorite extends React.Component {
   };
   */
 
-  componentDidMount()
- {
-  this.state
- }
   /**
    * This function delets Favorite with given index
    * @param {Integer} index - Index of the item that will be removed

@@ -105,15 +105,14 @@ class Home extends React.Component {
    */
   handleFavouritesClick = async () => {
     if (this.curLocation.lat && this.curLocation.lng) {
-      console.log(this.state.isFavourite);
       if (this.state.isFavourite) {
         let favs = getFavorite();
-        let idx = favs.findIndex(m => m.address.country == this.state.address.country
+        let idx = favs.findIndex(m => m.address.country ==  this.state.address.country
           && m.address.postcode == this.state.address.postcode
           && m.address.location == this.state.address.location
           && m.address.road == this.state.address.road
           && m.address.house_number == this.state.address.house_number);
-        if (idx) {
+        if (idx != -1) {
           removeFavoriteItem(idx);
           this.setState({ isFavourite: false });
         }
@@ -177,7 +176,7 @@ class Home extends React.Component {
     return (
       <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.loadLastPosition} onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
-        <SearchbarMap />
+        <SearchbarMap handleSearch={(pos) => this.map.setPosition(pos)} />
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
         <SheetModal ref={this.modal}>
           {/* The content of the sheet modal shows in 3 diffrent states. Highest priority has the route information. If no routing is not active, information about the specified location is displayed. Otherwise it shows nothing. */}

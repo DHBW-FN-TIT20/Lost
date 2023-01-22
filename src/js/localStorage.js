@@ -44,7 +44,7 @@ function storeFavorite(data) {
  * @returns the array of the favorite elements
  */
 function getFavorite() {
-  return JSON.parse(localStorage.getItem("favorite"));
+  return JSON.parse(localStorage.getItem("favorite")) ?? [];
 }
 
 /**

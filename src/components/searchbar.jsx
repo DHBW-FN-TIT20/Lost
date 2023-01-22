@@ -33,17 +33,33 @@ class SearchbarMap extends React.Component {
     }
     getSearchLocation(searchEvent.target.value).then((props) => {
       if (props.search == searchEvent.target.value) {
-        this.setState({
-          searchResults: props.location,
-        });
+        if (props.location.length > 0) {
+          this.setState({
+            searchResults: props.location,
+          });
+        } else {
+          this.setState({
+            searchResults: [{display_name: "nothing found"}]
+          })
+        }
       }
     });
+  }
+
+  search(item) {
+    if (item.lat && item.lon) {
+      this.props.handleSearch({ lat: item.lat, lng: item.lon });
+      this.setState({
+        isSearchResults: false
+      })
+    }
   }
 
   render() {
     return (
       <>
         <Searchbar
+          className="searchbarSearch"
           onChange={(evt) => (this.updateInputValue(evt))}
           disableButtonText="Cancel"
           placeholder="Search"
@@ -59,7 +75,7 @@ class SearchbarMap extends React.Component {
           <List className="searchResults">
             {this.state.searchResults.length > 0 ? 
               this.state.searchResults.map((item, idx) => (
-                <ListItem key={idx} link onClick={() => console.log(item)}>
+                <ListItem key={idx} link onClick={() => this.search(item)}>
                 {item.display_name}
                 </ListItem>
               ))
