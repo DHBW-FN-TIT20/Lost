@@ -1,0 +1,84 @@
+.map {
+  height: 100%;
+  width: 100%;
+
+  z-index: inherit;
+
+  .leaflet-control-container {
+    .leaflet-bottom {
+      bottom: 20px;
+      left: 0;
+      right: unset;
+    }
+    .leaflet-top {
+      top: calc(var(--f7-searchbar-height) + var(--f7-searchbar-in-page-content-margin)) !important;
+    }
+  } 
+
+  .leaflet-bar {
+    border-color: transparent;
+
+    a {
+      background-color: var(--f7-bars-bg-color);
+      border-color: transparent;
+      color: var(--f7-tabbar-link-inactive-color);
+
+    }
+
+    .active-state {
+      color: var(--f7-theme-color);
+    }
+
+    &.leaflet-control-zoom a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:active {
+        background-color: var(--f7-bars-bg-color);
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          background-color: var(--f7-theme-color);
+          opacity: 0.25;
+          border-radius: inherit;
+        }
+      }
+    }
+  }
+  .leaflet-routing-container {
+    display: none;
+  }
+
+}
+
+.userPosBtn {
+  position: absolute;
+  bottom: calc(var(--f7-tabbar-labels-height) + 20px);
+
+  height: var(--f7-tabbar-labels-height);
+  width: var(--f7-tabbar-labels-height);
+
+  right: 0;
+  margin: 20px 10px;
+  z-index: 5;
+
+  background-color: var(--f7-bars-bg-color) !important;
+
+  .ripple-wave {
+    background-color: var(--f7-theme-color);
+    opacity: 0.25 !important;
+  }
+
+  color: var(--f7-tabbar-link-inactive-color);
+
+
+  &.locating {
+    color: var(--f7-theme-color) !important;
+  }
+}

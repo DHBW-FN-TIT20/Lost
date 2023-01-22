@@ -1,0 +1,19 @@
+{
+  "cwd": "/workspace",
+  "type": [
+    "pwa"
+  ],
+  "name": "Lost",
+  "framework": "react",
+  "template": "blank",
+  "cssPreProcessor": "scss",
+  "bundler": "vite",
+  "theming": {
+    "customColor": true,
+    "color": "#EE1671",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false
+}
