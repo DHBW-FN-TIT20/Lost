@@ -124,7 +124,7 @@ class SheetModal extends React.Component {
 
   render() {
     return (
-      <Draggable disabled={this.state.isDisabled} onMouseDown={() => this.toggleUnlock()} ref={this.draggable} defaultPosition={{ x: 0, y: window.innerHeight - this.positions.close - this.positions.offset }} axis='y' bounds={{ left: 0, top: window.innerHeight * this.positions.high - this.positions.offset, right: 0, bottom: 1200 }} onStop={() => this.positioning()} >
+      <Draggable disabled={this.state.isDisabled} onMouseDown={() => this.toggleUnlock()} ref={this.draggable} defaultPosition={{ x: 0, y: window.innerHeight - this.positions.close - this.positions.offset }} axis='y' bounds={{ left: 0, top: window.innerHeight * this.positions.high - this.positions.offset, right: 0, bottom: 2000 }} onStop={() => this.positioning()} >
         <div className='sheetModal'>
           <a ref={this.slider} className="slider" />
           <div ref={this.content} className="modal-content">

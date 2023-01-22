@@ -20,7 +20,7 @@ function storeHistory(data) {
  * @returns the array of the history elements
  */
 function getHistory() {
-  return JSON.parse(localStorage.getItem("history"));
+  return JSON.parse(localStorage.getItem("history")) ?? [];
 }
 
 /**
