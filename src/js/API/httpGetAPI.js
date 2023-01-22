@@ -1,4 +1,3 @@
-
 /**
  * This function creates a http get request to the {@param url}
  * The request gets sent via. XMLHttpRequest (xhr.send()).
