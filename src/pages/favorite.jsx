@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Page, BlockTitle, List, ListItem, Button, Toggle, f7, f7ready } from "framework7-react";
+import { Page, BlockTitle, List, ListItem, Button, Toggle, f7 } from "framework7-react";
 
 import {
   getFavorite,
@@ -20,14 +20,6 @@ class Favorite extends React.Component {
       isDarkmode: false,
     };
   }
-
-  /* Example JSON object structure of a favorite/history item
-  favoriteItem = {
-    adress: "Erbach",
-    lat: 48.0,
-    lon: 50.0,
-  };
-  */
 
   /**
    * This function deletes a favorite, that the user has favorized before. The favorite is identified by the given index.
@@ -53,6 +45,11 @@ class Favorite extends React.Component {
     this.setState({ history: hist, favorite: fav });
   }
 
+  /**
+   * This function gets called if the dark mode toggle changes.
+   * It changes the current dark/white mode depending on the {@link evt} parameter.
+   * @param {boolean} evt - event state
+   */
   changeDarkmode = (evt) => {
     evt ? f7.$el.removeClass('dark') : f7.$el.addClass('dark');
     this.setState( { isDarkmode : !evt });

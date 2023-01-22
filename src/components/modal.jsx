@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Draggable from 'react-draggable';
-
+// style sheet
 import '../css/modal.scss';
 
 class SheetModal extends React.Component {

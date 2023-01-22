@@ -16,15 +16,10 @@ import getDirectionIconFromModifier from '../components/helpers/MetrictoDirectio
 import { getLocationInfo } from '../js/API/nominatimAPI';
 import wikiSearch from '../js/API/wikiAPI';
 import formatTime from '../js/helpers/formattime';
-
-// style sheets
-import '../css/home.scss'
 import { getFavorite, removeFavoriteItem, storeFavorite, storeHistory, getLastPosition, resetLastPosition } from '../js/localStorage';
 
-// import leaflet stuff
-// import nominatim stuff
-// import wikipedia stuff
-// import Routenberechnungs stuff
+// style sheet
+import '../css/home.scss'
 
 class Home extends React.Component {
   constructor(props) {
@@ -64,36 +59,7 @@ class Home extends React.Component {
   }
 
   /**
-   * This function searches for a Location by text or its OSM ID and returns the location
-   * @param {string} pSearch - This is the text which is put into the search field
-   * @param {string | undefined} osmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database.
-   * (https://web.locationiq.com/glossary/osm-id)
-   */
-  searchLocation = async (pSearch, osmID = undefined) => {
-    // if the OSM ID is undefined, use text search
-  };
-
-  /**
-   * This function  calls the nominatim API with a text search and returns a place
-   * @param {*} pSearch - This is the text which is put into the search field
-   */
-  getLocByText = async (pSearch) => { };
-
-  /**
-   * This function calls the nominatim API with a text search and returns a place
-   * @param {*} pCoordinates - These are the Coordiantes that have been put into the search field
-   */
-  getLocByCoords = async (pCoordinates) => { };
-
-  /**
-   * This function calls the nominatim API with a text search and returns a place
-   * @param {*} pOsmID - OSM ID is a numerical identifier that is assigned to every element in the OpenStreetMap (OSM) database.
-   */
-  getLocByOsmID = async pOsmID => {
-  }
-
-  /**
-   * This function handles the action for clicking the navigation-start/-stop button
+   * This function handels the action for clicking the navigation-start/-stop button
    * It start/stops the navigation process depending on the current routing state.
    */
   handleNavigationClick = async () => {
@@ -107,7 +73,7 @@ class Home extends React.Component {
     if (this.curLocation.lat && this.curLocation.lng) {
       if (this.state.isFavourite) {
         let favs = getFavorite();
-        let idx = favs.findIndex(m => m.address.country ==  this.state.address.country
+        let idx = favs.findIndex(m => m.address.country == this.state.address.country
           && m.address.postcode == this.state.address.postcode
           && m.address.location == this.state.address.location
           && m.address.road == this.state.address.road
@@ -168,10 +134,10 @@ class Home extends React.Component {
         && m.address.location == this.state.address.location
         && m.address.road == this.state.address.road
         && m.address.house_number == this.state.address.house_number);
-      if (this.state.isFavourite != isFav) this.setState({ isFavourite : isFav });
+      if (this.state.isFavourite != isFav) this.setState({ isFavourite: isFav });
     }
     let position = getLastPosition();
-    if(position) this.map.setPosition(position.pos);
+    if (position) this.map.setPosition(position.pos);
   }
 
   render() {

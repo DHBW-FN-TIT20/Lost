@@ -1,7 +1,5 @@
 import httpGet from "./httpGetAPI";
 
-// wikiSearch(48.175022701706496, 11.55661010796519, "München").then(r => console.log(r));
-
 /**
  * This function returns the corresponding Wikipedia article to the given position.
  * First it tries to find more info about the given coordinates, if it doesn't find a matching article for the given coordinates,

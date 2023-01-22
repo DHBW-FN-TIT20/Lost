@@ -1,14 +1,15 @@
 import React, { createRef } from "react";
+import { MapContainer, TileLayer } from 'react-leaflet';
+import LocationMarker from "./map-assets/LocationMarker";
+import UserLocationMarker from "./map-assets/UserLocationMarker";
+import { Button, f7 } from "framework7-react";
+// leaflet/map
 import 'leaflet/dist/leaflet.css';
 import Leaflet from 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
-import LocationMarker from "./map-assets/LocationMarker";
-import UserLocationMarker from "./map-assets/UserLocationMarker";
-
+// style sheet
 import '../css/map.scss';
-import { Button, f7 } from "framework7-react";
 
 class Map extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Map extends React.Component {
   }
 
   /**
-   * This function invokes after updating occurs.
+   * This function gets called after the Component has been updated.
    * Checks if routing is active and updates start and destination waypoints if so.
    */
   componentDidUpdate() {
@@ -132,8 +133,8 @@ class Map extends React.Component {
   }
 
   /**
-   * This function will be called when the user wants to stop the routing via a button press on the front-end.
-   * Ends and removes the route from the map.
+   * This function is called when the user wants to stop the routing via a button press on the front-end.
+   * It ends and removes the route from the map.
    */
   stopNavigation() {
     this.state.routing.remove();
@@ -142,6 +143,11 @@ class Map extends React.Component {
     this.props.handleInstructionsUpdate(null);
   }
 
+  /**
+   * This function updates the Locationmarker position.
+   * It triggers the parent "onPositionUpdate" event.
+   * @param {{number, number}} pos - position data (lat/lng)
+   */
   setPosition(pos) {
     this.map.current.setView(new L.LatLng(pos.lat, pos.lng))
     this.setState({ locationPos: pos });

@@ -46,6 +46,11 @@ class SearchbarMap extends React.Component {
     });
   }
 
+  /**
+   * This function gets called when a search result is clicked.
+   * It validates the given position data and triggers the handle search event.
+   * @param {string} item - search text
+   */
   search(item) {
     if (item.lat && item.lon) {
       this.props.handleSearch({ lat: item.lat, lng: item.lon });
