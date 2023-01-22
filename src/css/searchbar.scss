@@ -1,0 +1,16 @@
+.searchbarSearch {
+  position: absolute;
+  width: calc(100% - 2 * var(--f7-searchbar-in-page-content-margin)) !important;
+}
+
+.searchResults{
+  top: calc(var(--f7-searchbar-height) + var(--f7-searchbar-in-page-content-margin) / 2);
+  margin: var(--f7-searchbar-in-page-content-margin);
+  position: absolute;
+  z-index: 5;
+  width: calc(100% - 2 * var(--f7-searchbar-in-page-content-margin));
+
+  .loading .item-content .item-inner {
+    justify-content: center;
+  }
+}

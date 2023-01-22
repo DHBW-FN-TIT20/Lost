@@ -1,0 +1,24 @@
+{
+  "name": "Lost",
+  "short_name": "Lost",
+  "description": "Lost is a PWA designed to help you find out where you are and where you are headed.",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EE1671",
+  "theme_color": "#EE1671",
+  "icons": [
+    {
+      "src": "/icons/lost_logo-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/lost_logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "any",
+  "dir": "ltr"
+}
