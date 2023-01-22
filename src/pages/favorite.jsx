@@ -1,13 +1,16 @@
 import React from "react";
 
-import { Page, BlockTitle, List, ListItem, Button, Toggle, f7 } from "framework7-react";
+import { Page, BlockTitle, List, ListItem, Button, Toggle } from "framework7-react";
 
 import {
   getFavorite,
   getHistory,
   removeFavoriteItem,
   setLastPosition,
+  isDarkmodeAktive
 } from "../js/localStorage";
+
+import {changeDarkmode} from "../js/darkmode";
 
 import '../css/favourite.scss';
 
@@ -47,17 +50,26 @@ class Favorite extends React.Component {
 
   /**
    * This function gets called if the dark mode toggle changes.
-   * It changes the current dark/white mode depending on the {@link evt} parameter.
+   * It updates the state-variable which represents the status of dark mode and calls changeDarkmode()
    * @param {boolean} evt - event state
    */
-  changeDarkmode = (evt) => {
-    evt ? f7.$el.removeClass('dark') : f7.$el.addClass('dark');
+  toggleDarkmode = (evt) => {
     this.setState( { isDarkmode : !evt });
+    changeDarkmode(!evt)
+  }
+
+  /**
+   * This function is called on the init page. It calls loadLocalStorage() and updates the state variable which represents the current status of darkmode
+   */
+  initPage = () =>{
+    this.loadLocalStorage()
+    var dark = isDarkmodeAktive()
+    this.setState( { isDarkmode : dark });
   }
 
   render() {
     return (
-      <Page name="favorite" className="favourites" onPageTabShow={() => this.loadLocalStorage()}>
+      <Page name="favorite" className="favourites" onPageTabShow={this.initPage}> 
         <BlockTitle>Favorites</BlockTitle>
         <List simpleList className="list">
           {this.state.favorite.map((item, idx) => (
@@ -77,7 +89,7 @@ class Favorite extends React.Component {
         <List simpleList className="list">
           <ListItem>
             <div>Toggle Darkmode</div>
-            <Toggle checked={this.state.isDarkmode} onToggleChange={this.changeDarkmode} />
+            <Toggle checked={this.state.isDarkmode} onToggleChange={this.toggleDarkmode} />
           </ListItem>
         </List>
         <BlockTitle>History</BlockTitle>
