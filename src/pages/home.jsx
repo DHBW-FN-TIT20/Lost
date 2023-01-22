@@ -159,7 +159,9 @@ class Home extends React.Component {
       })
   }
 
-  loadLastPosition = () => {
+  handlePageShow = () => {
+    this.map.rerenderMap();
+    // load last Position when available
     if (this.curLocation.lat && this.curLocation.lng) {
       let isFav = getFavorite().some(m => m.address.country == this.state.address.country
         && m.address.postcode == this.state.address.postcode
@@ -174,7 +176,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.loadLastPosition} onPageInit={() => this.map.rerenderMap()}>
+      <Page name="home" className='home' onPageTabHide={() => resetLastPosition()} onPageTabShow={this.handlePageShow} onPageInit={() => this.map.rerenderMap()}>
         {/* Page content */}
         <SearchbarMap handleSearch={(pos) => this.map.setPosition(pos)} />
         <Map ref={instance => this.map = instance} handleInstructionsUpdate={(rt) => { this.setState({ route: rt }) }} onPositionUpdate={this.getWikiInfo} handleRouting={(state) => { this.setState({ isRouting: state }); this.modal.current.lower(); }} />
